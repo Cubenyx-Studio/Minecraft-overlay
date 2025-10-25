@@ -1,128 +1,129 @@
-# 📋 Informations sur le Mod - Versions & Compatibilité
+# 📋 Mod Information - Versions & Compatibility
 
-## 🎮 Versions Supportées
+## 🎮 Supported Versions
 
 ### ✅ Minecraft
-- **Version de base** : `1.21.1`
-- **Compatibilité** : `1.20.1` → `1.21.x` (toutes versions 1.21 incluses)
-- **Non supporté** : `< 1.20.1` et `≥ 1.22`
+- **Base version**: `1.21.1`
+- **Compatibility**: `1.20.1` → `1.21.x` (all 1.21 versions included)
+- **Not supported**: `< 1.20.1` and `≥ 1.22`
 
 ### ✅ NeoForge
-- **Version utilisée** : `21.1.76`
-- **Compatibilité** : `21.1.76+` (versions supérieures supportées)
+- **Version used**: `21.1.76`
+- **Compatibility**: `21.1.76+` (higher versions supported)
 
 ### ✅ Java
-- **Requis** : Java 21 ou supérieur
-- **Testé avec** : Java 22
+- **Required**: Java 21 or higher
+- **Tested with**: Java 22
 
 ---
 
-## 💻 Type de Mod : **CLIENT-ONLY**
+## 💻 Mod Type: **CLIENT-ONLY**
 
-### ✅ Qu'est-ce que cela signifie ?
+### ✅ What does this mean?
 
-Le mod est **strictement côté client** :
-- ✅ **Installation** : Uniquement dans le dossier `mods/` du **client**
-- ❌ **Serveur** : **Pas besoin** de l'installer sur le serveur
-- ✅ **Multijoueur** : Fonctionne sur n'importe quel serveur (Vanilla, Forge, NeoForge, etc.)
-- ✅ **Solo** : Fonctionne en solo
+The mod is **strictly client-side**:
+- ✅ **Installation**: Only in the **client** `mods/` folder
+- ❌ **Server**: **No need** to install on the server
+- ✅ **Multiplayer**: Works on any server (Vanilla, Forge, NeoForge, etc.)
+- ✅ **Singleplayer**: Works in singleplayer
 
-### 🔧 Configuration Technique
+### 🔧 Technical Configuration
 
-**Fichier** : `neoforge.mods.toml`
+**File**: `neoforge.mods.toml`
 ```toml
-side = "CLIENT"  # ← Mod client-only
+side = "CLIENT"  # ← Client-only mod
 ```
 
-**Code** : `MinecraftOverlay.java`
+**Code**: `MinecraftOverlay.java`
 ```java
 @Mod(value = MinecraftOverlay.MODID, dist = Dist.CLIENT)
-// ← Chargé uniquement côté client
+// ← Loaded only on client side
 ```
 
 ---
 
-## 📦 Compatibilité Serveur
+## 📦 Server Compatibility
 
-| Type de Serveur | Compatible ? | Besoin sur Serveur ? |
-|-----------------|--------------|---------------------|
-| Vanilla | ✅ Oui | ❌ Non |
-| Forge/NeoForge | ✅ Oui | ❌ Non |
-| Spigot/Paper | ✅ Oui | ❌ Non |
-| Fabric | ✅ Oui | ❌ Non |
+| Server Type | Compatible? | Required on Server? |
+|-------------|-------------|---------------------|
+| Vanilla | ✅ Yes | ❌ No |
+| Forge/NeoForge | ✅ Yes | ❌ No |
+| Spigot/Paper | ✅ Yes | ❌ No |
+| Fabric | ✅ Yes | ❌ No |
 
-**Conclusion** : Le mod fonctionne sur **tous les serveurs** sans installation serveur !
+**Conclusion**: The mod works on **all servers** without server installation!
 
 ---
 
-## 🎯 Où Installer le Mod ?
+## 🎯 Where to Install the Mod?
 
-### ✅ Installation Client
+### ✅ Client Installation
 ```
 .minecraft/
 └── mods/
-    └── Minecraft-Overlay-1.0.0.jar  ← ICI
+    └── Minecraft-Overlay-1.0.0.jar  ← HERE
 ```
 
-### ❌ PAS sur le Serveur
+### ❌ NOT on the Server
 ```
 server/
 └── mods/
-    └── [NE PAS METTRE ICI]
+    └── [DO NOT PUT HERE]
 ```
 
 ---
 
-## 🚀 Test de Compatibilité
+## 🚀 Compatibility Testing
 
-### Client Solo (1.20.1 - 1.21.x)
+### Singleplayer Client (1.20.1 - 1.21.x)
 ```bash
-# Lancer avec la version de votre choix
+# Launch with your chosen version
 cmd /c gradlew.bat runClient
 ```
 
-### Multijoueur
-1. ✅ Installez le mod dans `.minecraft/mods/`
-2. ✅ Connectez-vous à n'importe quel serveur 1.20.1-1.21.x
-3. ✅ Le mod fonctionne automatiquement
-4. ❌ Le serveur n'a PAS besoin du mod
+### Multiplayer
+1. ✅ Install the mod in `.minecraft/mods/`
+2. ✅ Connect to any server 1.20.1-1.21.x
+3. ✅ The mod works automatically
+4. ❌ The server does NOT need the mod
 
 ---
 
-## 📊 Résumé Technique
+## 📊 Technical Summary
 
-| Propriété | Valeur |
-|-----------|--------|
+| Property | Value |
+|----------|-------|
 | **Minecraft** | 1.20.1 → 1.21.x |
 | **NeoForge** | 21.1.76+ |
 | **Java** | 21+ |
 | **Type** | CLIENT-ONLY |
-| **Serveur requis** | ❌ NON |
-| **Config Type** | CLIENT (pas COMMON) |
+| **Server required** | ❌ NO |
+| **Config Type** | CLIENT (not COMMON) |
 
 ---
 
-## ⚠️ Changements Effectués
+## ⚠️ Changes Made
 
-Pour rendre le mod strictement client-only :
+To make the mod strictly client-only:
 
-1. ✅ **neoforge.mods.toml** : `side = "CLIENT"` (au lieu de `BOTH`)
-2. ✅ **MinecraftOverlay.java** : 
-   - Ajout `@Mod(dist = Dist.CLIENT)`
-   - Suppression de `onServerStarting()`
-   - Config changée en `ModConfig.Type.CLIENT`
-3. ✅ Suppression des imports serveur inutiles
+1. ✅ **neoforge.mods.toml**: `side = "CLIENT"` (instead of `BOTH`)
+2. ✅ **MinecraftOverlay.java**: 
+   - Added `@Mod(dist = Dist.CLIENT)`
+   - Removed `onServerStarting()`
+   - Changed config to `ModConfig.Type.CLIENT`
+3. ✅ Removed unnecessary server imports
 
 ---
 
 ## 🎉 Conclusion
 
-✅ **Le mod est maintenant strictement CLIENT-ONLY**  
-✅ **Compatible avec Minecraft 1.20.1 → 1.21.x**  
-✅ **Fonctionne sur tous les serveurs sans installation serveur**  
-✅ **Configuration optimisée pour le client**
+✅ **The mod is now strictly CLIENT-ONLY**  
+✅ **Compatible with Minecraft 1.20.1 → 1.21.x**  
+✅ **Works on all servers without server installation**  
+✅ **Configuration optimized for client**
 
 ---
 
-**🎮 Prêt à utiliser sur n'importe quel serveur 1.20.1-1.21.x !**
+**🎮 Ready to use on any server 1.20.1-1.21.x!**
+
 
