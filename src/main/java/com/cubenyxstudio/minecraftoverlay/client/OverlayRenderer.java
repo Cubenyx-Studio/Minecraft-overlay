@@ -54,62 +54,58 @@ public class OverlayRenderer {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
 
-        // Draw full screen semi-transparent gray overlay (like Steam)
-        int overlayColor = 0x80000000; // 50% transparent black
-        guiGraphics.fill(0, 0, screenWidth, screenHeight, overlayColor);
+        int padding = 10;
+        int lineHeight = 12;
+        int textColor = 0xFFFFFF;
+        int shadowColor = 0x000000;
 
-        // Panel dimensions
-        int panelWidth = 300;
-        int panelHeight = 200;
-        int panelX = (screenWidth - panelWidth) / 2;
-        int panelY = (screenHeight - panelHeight) / 2;
+        // ===== TOP LEFT CORNER =====
+        int leftX = padding;
+        int leftY = padding;
 
-        // Draw panel background
-        int panelBg = 0xE0171717; // Dark background with high opacity
-        guiGraphics.fill(panelX, panelY, panelX + panelWidth, panelY + panelHeight, panelBg);
-
-        // Draw panel border
-        int borderColor = 0xFF3a7ebf; // Steam-like blue border
-        guiGraphics.fill(panelX - 2, panelY - 2, panelX + panelWidth + 2, panelY, borderColor); // Top
-        guiGraphics.fill(panelX - 2, panelY + panelHeight, panelX + panelWidth + 2, panelY + panelHeight + 2, borderColor); // Bottom
-        guiGraphics.fill(panelX - 2, panelY, panelX, panelY + panelHeight, borderColor); // Left
-        guiGraphics.fill(panelX + panelWidth, panelY, panelX + panelWidth + 2, panelY + panelHeight, borderColor); // Right
-
-        // Title
-        String title = "Minecraft Overlay";
-        int titleX = panelX + (panelWidth - minecraft.font.width(title)) / 2;
-        guiGraphics.drawString(minecraft.font, title, titleX, panelY + 15, 0xFFFFFF);
-
-        // Separator line
-        guiGraphics.fill(panelX + 10, panelY + 35, panelX + panelWidth - 10, panelY + 37, 0xFF3a7ebf);
-
-        // Current time
+        // Time
         String currentTime = "Time: " + LocalTime.now().format(TIME_FORMATTER);
-        guiGraphics.drawString(minecraft.font, currentTime, panelX + 20, panelY + 50, 0xCCCCCC);
+        guiGraphics.drawString(minecraft.font, currentTime, leftX, leftY, textColor);
+        leftY += lineHeight;
 
-        // Player coordinates
+        // FPS
+        String fps = "FPS: " + minecraft.getFps();
+        guiGraphics.drawString(minecraft.font, fps, leftX, leftY, textColor);
+
+        // ===== TOP RIGHT CORNER =====
         if (minecraft.player != null) {
+            int rightY = padding;
+
+            // Position
             BlockPos pos = minecraft.player.blockPosition();
-            String coords = String.format("Position: X: %d, Y: %d, Z: %d", pos.getX(), pos.getY(), pos.getZ());
-            guiGraphics.drawString(minecraft.font, coords, panelX + 20, panelY + 70, 0xCCCCCC);
+            String coords = String.format("X: %d, Y: %d, Z: %d", pos.getX(), pos.getY(), pos.getZ());
+            int coordsWidth = minecraft.font.width(coords);
+            guiGraphics.drawString(minecraft.font, coords, screenWidth - coordsWidth - padding, rightY, textColor);
+            rightY += lineHeight;
 
             // Dimension
             String dimension = "Dimension: " + minecraft.player.level().dimension().location().getPath();
-            guiGraphics.drawString(minecraft.font, dimension, panelX + 20, panelY + 90, 0xCCCCCC);
+            int dimWidth = minecraft.font.width(dimension);
+            guiGraphics.drawString(minecraft.font, dimension, screenWidth - dimWidth - padding, rightY, textColor);
+        }
 
-            // FPS
-            String fps = "FPS: " + minecraft.getFps();
-            guiGraphics.drawString(minecraft.font, fps, panelX + 20, panelY + 110, 0xCCCCCC);
+        // ===== TOP CENTER =====
+        if (minecraft.player != null) {
+            int centerY = padding;
 
             // Health
             String health = String.format("Health: %.1f / %.1f", minecraft.player.getHealth(), minecraft.player.getMaxHealth());
-            guiGraphics.drawString(minecraft.font, health, panelX + 20, panelY + 130, 0xCCCCCC);
-        }
+            int healthWidth = minecraft.font.width(health);
+            int healthX = (screenWidth - healthWidth) / 2;
+            guiGraphics.drawString(minecraft.font, health, healthX, centerY, textColor);
+            centerY += lineHeight;
 
-        // Instructions
-        String instruction = "Press Shift+Tab to close";
-        int instructX = panelX + (panelWidth - minecraft.font.width(instruction)) / 2;
-        guiGraphics.drawString(minecraft.font, instruction, instructX, panelY + panelHeight - 25, 0x888888);
+            // Instructions
+            String instruction = "Press Shift+Tab to close";
+            int instructWidth = minecraft.font.width(instruction);
+            int instructX = (screenWidth - instructWidth) / 2;
+            guiGraphics.drawString(minecraft.font, instruction, instructX, centerY, 0xAAAAAA);
+        }
 
         RenderSystem.disableBlend();
     }
