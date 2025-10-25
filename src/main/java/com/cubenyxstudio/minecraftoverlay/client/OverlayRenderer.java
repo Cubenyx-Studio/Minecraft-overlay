@@ -3,13 +3,16 @@ package com.cubenyxstudio.minecraftoverlay.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.cubenyxstudio.minecraftoverlay.Config;
 import com.cubenyxstudio.minecraftoverlay.MinecraftOverlay;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Renders the Steam-like overlay on the Minecraft screen
@@ -17,9 +20,20 @@ import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 @EventBusSubscriber(modid = MinecraftOverlay.MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class OverlayRenderer {
 
+    private static boolean overlayVisible = false;
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+    public static void toggleOverlay() {
+        overlayVisible = !overlayVisible;
+    }
+
+    public static boolean isOverlayVisible() {
+        return overlayVisible;
+    }
+
     @SubscribeEvent
     public static void onRenderGuiOverlay(RenderGuiLayerEvent.Post event) {
-        if (!Config.overlayEnabled) {
+        if (!Config.overlayEnabled || !overlayVisible) {
             return;
         }
 
@@ -32,71 +46,70 @@ public class OverlayRenderer {
         int screenWidth = minecraft.getWindow().getGuiScaledWidth();
         int screenHeight = minecraft.getWindow().getGuiScaledHeight();
 
-        // Basic overlay rendering - will be expanded later
-        renderBasicOverlay(guiGraphics, screenWidth, screenHeight);
+        // Render Steam-like overlay
+        renderSteamOverlay(guiGraphics, screenWidth, screenHeight, minecraft);
     }
 
-    private static void renderBasicOverlay(GuiGraphics guiGraphics, int screenWidth, int screenHeight) {
+    private static void renderSteamOverlay(GuiGraphics guiGraphics, int screenWidth, int screenHeight, Minecraft minecraft) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
 
-        // Calculate opacity from config (0-100 to 0.0-1.0)
-        float alpha = Config.overlayOpacity / 100.0f;
+        // Draw full screen semi-transparent gray overlay (like Steam)
+        int overlayColor = 0x80000000; // 50% transparent black
+        guiGraphics.fill(0, 0, screenWidth, screenHeight, overlayColor);
 
-        // Draw a simple overlay panel as a placeholder
-        int panelWidth = 200;
-        int panelHeight = 100;
-        int x = 10;
-        int y = 10;
+        // Panel dimensions
+        int panelWidth = 300;
+        int panelHeight = 200;
+        int panelX = (screenWidth - panelWidth) / 2;
+        int panelY = (screenHeight - panelHeight) / 2;
 
-        // Position based on config
-        switch (Config.overlayPosition.toUpperCase()) {
-            case "TOP_RIGHT":
-                x = screenWidth - panelWidth - 10;
-                y = 10;
-                break;
-            case "BOTTOM_LEFT":
-                x = 10;
-                y = screenHeight - panelHeight - 10;
-                break;
-            case "BOTTOM_RIGHT":
-                x = screenWidth - panelWidth - 10;
-                y = screenHeight - panelHeight - 10;
-                break;
-            default: // TOP_LEFT
-                x = 10;
-                y = 10;
-                break;
+        // Draw panel background
+        int panelBg = 0xE0171717; // Dark background with high opacity
+        guiGraphics.fill(panelX, panelY, panelX + panelWidth, panelY + panelHeight, panelBg);
+
+        // Draw panel border
+        int borderColor = 0xFF3a7ebf; // Steam-like blue border
+        guiGraphics.fill(panelX - 2, panelY - 2, panelX + panelWidth + 2, panelY, borderColor); // Top
+        guiGraphics.fill(panelX - 2, panelY + panelHeight, panelX + panelWidth + 2, panelY + panelHeight + 2, borderColor); // Bottom
+        guiGraphics.fill(panelX - 2, panelY, panelX, panelY + panelHeight, borderColor); // Left
+        guiGraphics.fill(panelX + panelWidth, panelY, panelX + panelWidth + 2, panelY + panelHeight, borderColor); // Right
+
+        // Title
+        String title = "Minecraft Overlay";
+        int titleX = panelX + (panelWidth - minecraft.font.width(title)) / 2;
+        guiGraphics.drawString(minecraft.font, title, titleX, panelY + 15, 0xFFFFFF);
+
+        // Separator line
+        guiGraphics.fill(panelX + 10, panelY + 35, panelX + panelWidth - 10, panelY + 37, 0xFF3a7ebf);
+
+        // Current time
+        String currentTime = "Time: " + LocalTime.now().format(TIME_FORMATTER);
+        guiGraphics.drawString(minecraft.font, currentTime, panelX + 20, panelY + 50, 0xCCCCCC);
+
+        // Player coordinates
+        if (minecraft.player != null) {
+            BlockPos pos = minecraft.player.blockPosition();
+            String coords = String.format("Position: X: %d, Y: %d, Z: %d", pos.getX(), pos.getY(), pos.getZ());
+            guiGraphics.drawString(minecraft.font, coords, panelX + 20, panelY + 70, 0xCCCCCC);
+
+            // Dimension
+            String dimension = "Dimension: " + minecraft.player.level().dimension().location().getPath();
+            guiGraphics.drawString(minecraft.font, dimension, panelX + 20, panelY + 90, 0xCCCCCC);
+
+            // FPS
+            String fps = "FPS: " + minecraft.getFps();
+            guiGraphics.drawString(minecraft.font, fps, panelX + 20, panelY + 110, 0xCCCCCC);
+
+            // Health
+            String health = String.format("Health: %.1f / %.1f", minecraft.player.getHealth(), minecraft.player.getMaxHealth());
+            guiGraphics.drawString(minecraft.font, health, panelX + 20, panelY + 130, 0xCCCCCC);
         }
 
-        // Draw semi-transparent background (dark gray with alpha)
-        int backgroundColor = (int)(alpha * 255) << 24 | 0x1a1a1a;
-        guiGraphics.fill(x, y, x + panelWidth, y + panelHeight, backgroundColor);
-
-        // Draw border
-        int borderColor = (int)(alpha * 255) << 24 | 0x3a3a3a;
-        guiGraphics.fill(x, y, x + panelWidth, y + 2, borderColor); // Top
-        guiGraphics.fill(x, y + panelHeight - 2, x + panelWidth, y + panelHeight, borderColor); // Bottom
-        guiGraphics.fill(x, y, x + 2, y + panelHeight, borderColor); // Left
-        guiGraphics.fill(x + panelWidth - 2, y, x + panelWidth, y + panelHeight, borderColor); // Right
-
-        // Draw title text
-        guiGraphics.drawString(
-            Minecraft.getInstance().font,
-            "Minecraft Overlay",
-            x + 10,
-            y + 10,
-            0xFFFFFF
-        );
-
-        // Draw placeholder text
-        guiGraphics.drawString(
-            Minecraft.getInstance().font,
-            "Steam-like overlay",
-            x + 10,
-            y + 30,
-            0xAAAAAA
-        );
+        // Instructions
+        String instruction = "Press Shift+Tab to close";
+        int instructX = panelX + (panelWidth - minecraft.font.width(instruction)) / 2;
+        guiGraphics.drawString(minecraft.font, instruction, instructX, panelY + panelHeight - 25, 0x888888);
 
         RenderSystem.disableBlend();
     }
