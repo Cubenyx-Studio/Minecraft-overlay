@@ -1,5 +1,6 @@
 package com.cubenyxstudio.minecraftoverlay.client;
 
+import com.cubenyxstudio.minecraftoverlay.client.screens.OverlayScreen;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.cubenyxstudio.minecraftoverlay.MinecraftOverlay;
 import net.minecraft.client.KeyMapping;
@@ -50,7 +51,12 @@ public class KeyBindings {
                                    GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_SHIFT) == GLFW.GLFW_PRESS;
 
             if (shiftPressed) {
-                OverlayRenderer.toggleOverlay();
+                // Toggle overlay screen
+                if (minecraft.screen == null) {
+                    minecraft.setScreen(new OverlayScreen());
+                } else if (minecraft.screen instanceof OverlayScreen) {
+                    minecraft.setScreen(null);
+                }
             }
         }
     }

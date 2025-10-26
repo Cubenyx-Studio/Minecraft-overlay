@@ -17,6 +17,43 @@
 
 ---
 
+## 🎯 Mod Features
+
+### 📊 Steam-like Overlay
+Press **Shift+Tab** to open the overlay that displays:
+- ⏰ **Current time** (top left)
+- 🎮 **FPS** (top left)
+- 📍 **Coordinates** X, Y, Z (top right)
+- 🌍 **Current dimension** (top right)
+- ❤️ **Player health** (top center)
+
+### 🔧 Built-in Tools
+The overlay has 4 buttons at the bottom of the screen:
+
+#### 🌐 **Browser**
+- Simplified web browsing interface
+- Quick links to Minecraft.net, CurseForge, Modrinth
+- Note: Full browser would require additional libraries
+
+#### ⏱ **Timer**
+- Configure hours, minutes, seconds
+- Start/Stop countdown
+- Notification when time is up
+- Easy reset
+
+#### ⏲ **Stopwatch**
+- Start/Stop chronometer
+- Lap recording
+- Millisecond precision
+- Display of last 5 laps
+
+#### ⚙ **Settings**
+- Enable/Disable overlay
+- Configure information display
+- Customization options
+
+---
+
 ## 💻 Mod Type: **CLIENT-ONLY**
 
 ### ✅ What does this mean?

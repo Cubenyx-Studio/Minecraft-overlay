@@ -20,19 +20,31 @@ This mod is compatible with Minecraft **1.20.1 to 1.21.x** (all 1.21 versions in
 
 ## 📋 Features
 
-### Current Version (Base)
-- ✅ Basic overlay displayed in-game
-- ✅ Customizable configuration (position, opacity)
-- ✅ Keyboard shortcut to toggle on/off (F9 by default)
-- ✅ Multilingual support (French & English)
+### Current Version
+- ✅ **Steam-like overlay** with Shift+Tab toggle
+- ✅ **Real-time information display:**
+  - ⏰ Current time
+  - 🎮 FPS counter
+  - 📍 Player coordinates (X, Y, Z)
+  - 🌍 Current dimension
+  - ❤️ Player health
+- ✅ **Integrated tools:**
+  - 🌐 **Browser** - Web browsing interface with quick links
+  - ⏱ **Timer** - Configurable countdown timer
+  - ⏲ **Stopwatch** - Precision chronometer with lap recording
+  - ⚙ **Settings** - Overlay customization options
+- ✅ **Interactive buttons** with hover effects
+- ✅ **Transparent overlay** - Non-intrusive design
+- ✅ **Multilingual support** (French & English)
 
 ### Planned Features
-- 🔲 Steam-like interface
+- 🔲 Full web browser with rendering
 - 🔲 Online friends list
 - 🔲 Integrated chat
-- 🔲 Notifications
+- 🔲 Notifications system
 - 🔲 Screenshot with annotation
 - 🔲 Advanced visual settings
+- 🔲 Persistent configuration save
 
 ## 🚀 Installation
 
@@ -41,7 +53,14 @@ This mod is compatible with Minecraft **1.20.1 to 1.21.x** (all 1.21 versions in
 - Gradle (included via wrapper)
 - NeoForge 1.21.1+
 
-### Development
+### For Users
+
+1. Download the JAR file from releases
+2. Place it in your `.minecraft/mods/` folder
+3. Launch Minecraft with NeoForge profile
+4. Press **Shift+Tab** in-game to open the overlay
+
+### For Developers
 
 1. Clone the repository:
 ```bash
@@ -62,16 +81,47 @@ gradlew runClient
 
 ## ⚙️ Configuration
 
-The mod can be configured via the Forge configuration file:
+The mod can be configured via the in-game Settings menu or the Forge configuration file:
 
 - **overlayEnabled**: Enable/disable the overlay (default: true)
-- **overlayOpacity**: Overlay opacity 0-100 (default: 90)
-- **overlayPosition**: Overlay position (TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT)
+- **Show FPS**: Display FPS counter
+- **Show Coordinates**: Display player coordinates
+- **Show Time**: Display current time
+- **Show Health**: Display player health
+- **Show Dimension**: Display current dimension
 
 ## 🎯 Usage
 
-- Press **F9** (by default) to toggle the overlay on/off
-- Keys can be reconfigured in Minecraft settings
+### Main Controls
+- Press **Shift+Tab** to toggle the overlay on/off
+
+### Overlay Features
+
+#### 🌐 Browser
+- Enter URLs in the address bar
+- Click "Go" to navigate
+- Use quick links for popular sites (Minecraft.net, CurseForge, Modrinth)
+- Click "Close Browser" to return
+
+#### ⏱ Timer
+- Set hours, minutes, and seconds
+- Click "Start" to begin countdown
+- Click "Stop" to pause
+- Click "Reset" to clear
+- Get a notification when time is up
+
+#### ⏲ Stopwatch
+- Click "Start" to begin timing
+- Click "Stop" to pause
+- Click "Lap" to record a split time
+- Click "Reset" to clear all
+- View last 5 lap times
+- Millisecond precision display
+
+#### ⚙ Settings
+- Toggle overlay visibility
+- Enable/disable individual information displays
+- Click "Save Settings" to apply changes
 
 ## 🚀 Building & Distribution
 
@@ -95,7 +145,12 @@ minecraft-overlay/
 │   │   ├── Config.java                  # Mod configuration
 │   │   └── client/
 │   │       ├── OverlayRenderer.java     # Overlay rendering
-│   │       └── KeyBindings.java         # Key management
+│   │       ├── KeyBindings.java         # Key management
+│   │       └── screens/
+│   │           ├── BrowserScreen.java   # Browser interface
+│   │           ├── TimerScreen.java     # Timer tool
+│   │           ├── StopwatchScreen.java # Stopwatch tool
+│   │           └── SettingsScreen.java  # Settings menu
 │   └── resources/
 │       ├── META-INF/neoforge.mods.toml  # Mod metadata
 │       ├── pack.mcmeta                  # Resource pack metadata

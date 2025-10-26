@@ -17,6 +17,43 @@
 
 ---
 
+## 🎯 Fonctionnalités du Mod
+
+### 📊 Overlay Steam-like
+Appuyez sur **Shift+Tab** pour ouvrir l'overlay qui affiche :
+- ⏰ **Heure actuelle** (haut gauche)
+- 🎮 **FPS** (haut gauche)
+- 📍 **Coordonnées** X, Y, Z (haut droite)
+- 🌍 **Dimension** actuelle (haut droite)
+- ❤️ **Santé** du joueur (centre haut)
+
+### 🔧 Outils intégrés
+L'overlay dispose de 4 boutons en bas de l'écran :
+
+#### 🌐 **Navigateur**
+- Interface de navigation web simplifiée
+- Liens rapides vers Minecraft.net, CurseForge, Modrinth
+- Note : Navigateur complet nécessiterait des bibliothèques additionnelles
+
+#### ⏱ **Minuteur (Timer)**
+- Configurer des heures, minutes, secondes
+- Démarrer/Arrêter le compte à rebours
+- Notification quand le temps est écoulé
+- Réinitialisation facile
+
+#### ⏲ **Chronomètre**
+- Démarrer/Arrêter le chronomètre
+- Enregistrement de tours (laps)
+- Précision à la milliseconde
+- Affichage des 5 derniers tours
+
+#### ⚙ **Paramètres**
+- Activer/Désactiver l'overlay
+- Configurer l'affichage des informations
+- Options de personnalisation
+
+---
+
 ## 💻 Type de Mod : **CLIENT-ONLY**
 
 ### ✅ Qu'est-ce que cela signifie ?
