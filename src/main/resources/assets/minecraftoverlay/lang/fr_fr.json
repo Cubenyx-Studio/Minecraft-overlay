@@ -5,6 +5,16 @@
   "overlay.button.browser": "Navigateur",
   "overlay.button.timer": "Minuteur",
   "overlay.button.stopwatch": "Chronomètre",
-  "overlay.button.settings": "Paramètres"
+  "overlay.button.settings": "Paramètres",
+  "overlay.logger.initialized": "L'overlay Minecraft est initialisé côté client",
+  "overlay.logger.setup": "La configuration de l'overlay Minecraft côté client est terminée",
+  "overlay.logger.initializing": "Initialisation du mod Minecraft Overlay (Client uniquement)",
+  "overlay.time": "⭐ Heure : %s",
+  "overlay.fps": "⭐ FPS : %s",
+  "overlay.instance_time": "⭐ Session : %s",
+  "overlay.world_time": "⭐ Monde : %s (%s)",
+  "overlay.dimension_time": "⭐ Dimension : %s (%s)",
+  "overlay.coordinates": "⭐ X : %s, Y : %s, Z : %s",
+  "overlay.dimension": "⭐ Dimension : %s",
+  "overlay.health": "⭐ Santé : %s / %s"
 }
-
