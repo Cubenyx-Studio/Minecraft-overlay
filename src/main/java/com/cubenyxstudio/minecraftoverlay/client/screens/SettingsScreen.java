@@ -12,15 +12,6 @@ import net.minecraft.network.chat.Component;
  */
 public class SettingsScreen extends Screen {
     private final Screen previousScreen;
-    private Button saveButton;
-
-    // Config values (you could move these to the Config class later)
-    private boolean showFPS = true;
-    private boolean showCoordinates = true;
-    private boolean showRealTime = true;
-    private boolean showHealth = true;
-    private boolean showDimension = true;
-    private boolean showPlayTime = true;
 
     public SettingsScreen(Screen previousScreen) {
         super(Component.literal("Overlay Settings"));
@@ -47,49 +38,49 @@ public class SettingsScreen extends Screen {
                         (button, value) -> Config.overlayEnabled = value));
 
         // Show FPS toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(showFPS)
-                .withInitialValue(showFPS)
+        this.addRenderableWidget(CycleButton.onOffBuilder(Config.showFPS)
+                .withInitialValue(Config.showFPS)
                 .create(leftX, startY + spacing, columnWidth, buttonHeight,
                         Component.literal("Show FPS"),
-                        (button, value) -> showFPS = value));
+                        (button, value) -> Config.showFPS = value));
 
         // Show coordinates toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(showCoordinates)
-                .withInitialValue(showCoordinates)
+        this.addRenderableWidget(CycleButton.onOffBuilder(Config.showCoordinates)
+                .withInitialValue(Config.showCoordinates)
                 .create(leftX, startY + spacing * 2, columnWidth, buttonHeight,
                         Component.literal("Show Coordinates"),
-                        (button, value) -> showCoordinates = value));
+                        (button, value) -> Config.showCoordinates = value));
 
         // Show real time toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(showRealTime)
-                .withInitialValue(showRealTime)
+        this.addRenderableWidget(CycleButton.onOffBuilder(Config.showRealTime)
+                .withInitialValue(Config.showRealTime)
                 .create(leftX, startY + spacing * 3, columnWidth, buttonHeight,
                         Component.literal("Show Real Time"),
-                        (button, value) -> showRealTime = value));
+                        (button, value) -> Config.showRealTime = value));
 
         // === RIGHT COLUMN: TIME TRACKING ===
         int rightX = centerX + columnSpacing / 2;
 
         // Show play time toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(showPlayTime)
-                .withInitialValue(showPlayTime)
+        this.addRenderableWidget(CycleButton.onOffBuilder(Config.showPlayTime)
+                .withInitialValue(Config.showPlayTime)
                 .create(rightX, startY, columnWidth, buttonHeight,
                         Component.literal("Show Play Time"),
-                        (button, value) -> showPlayTime = value));
+                        (button, value) -> Config.showPlayTime = value));
 
         // Show health toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(showHealth)
-                .withInitialValue(showHealth)
+        this.addRenderableWidget(CycleButton.onOffBuilder(Config.showHealth)
+                .withInitialValue(Config.showHealth)
                 .create(rightX, startY + spacing, columnWidth, buttonHeight,
                         Component.literal("Show Health"),
-                        (button, value) -> showHealth = value));
+                        (button, value) -> Config.showHealth = value));
 
         // Show dimension toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(showDimension)
-                .withInitialValue(showDimension)
+        this.addRenderableWidget(CycleButton.onOffBuilder(Config.showDimension)
+                .withInitialValue(Config.showDimension)
                 .create(rightX, startY + spacing * 2, columnWidth, buttonHeight,
                         Component.literal("Show Dimension"),
-                        (button, value) -> showDimension = value));
+                        (button, value) -> Config.showDimension = value));
 
         // === BOTTOM BUTTONS ===
         int bottomButtonWidth = 120;
@@ -97,22 +88,20 @@ public class SettingsScreen extends Screen {
         int bottomY = this.height - 35;
 
         // Save button
-        this.saveButton = Button.builder(Component.literal("✓ Save"), button -> saveSettings())
+        this.addRenderableWidget(Button.builder(Component.literal("✓ Save"), button -> saveSettings())
                 .bounds(centerX - bottomButtonWidth - bottomButtonSpacing / 2, bottomY, bottomButtonWidth, 20)
-                .build();
-        this.addRenderableWidget(this.saveButton);
+                .build());
 
-        // Back button
+        // Back button (cancel without saving)
         this.addRenderableWidget(Button.builder(Component.literal("✕ Cancel"), button -> this.onClose())
                 .bounds(centerX + bottomButtonSpacing / 2, bottomY, bottomButtonWidth, 20)
                 .build());
     }
 
     private void saveSettings() {
-        // Save all settings to Config class
-        // For now, just Config.overlayEnabled is actually used
-        // You can extend the Config class to include the other settings
-
+        // Save configuration to file
+        Config.save();
+        
         if (this.minecraft != null && this.minecraft.player != null) {
             this.minecraft.player.sendSystemMessage(Component.literal("§a[Settings] Settings saved successfully!"));
         }

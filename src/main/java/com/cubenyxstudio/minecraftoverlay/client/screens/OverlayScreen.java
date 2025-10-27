@@ -1,6 +1,7 @@
 package com.cubenyxstudio.minecraftoverlay.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.cubenyxstudio.minecraftoverlay.Config;
 import com.cubenyxstudio.minecraftoverlay.client.OverlayState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -117,68 +118,85 @@ public class OverlayScreen extends Screen {
         int leftX = padding;
         int leftY = padding;
 
-        String currentTime = "Time: " + LocalTime.now().format(TIME_FORMATTER);
-        guiGraphics.drawString(this.font, currentTime, leftX, leftY, textColor);
-        leftY += lineHeight;
-
-        String fps = "FPS: " + this.minecraft.getFps();
-        guiGraphics.drawString(this.font, fps, leftX, leftY, textColor);
-        leftY += lineHeight;
-
-        // Play time information
-        leftY += 3; // Small gap
-
-        String instanceTime = "Instance: " + OverlayState.formatPlayTime(OverlayState.getInstancePlayTime());
-        guiGraphics.drawString(this.font, instanceTime, leftX, leftY, 0xFFD700); // Gold color
-        leftY += lineHeight;
-
-        if (OverlayState.getWorldPlayTime() > 0) {
-            String worldName = OverlayState.getCurrentWorldName();
-            if (worldName.length() > 20) {
-                worldName = worldName.substring(0, 17) + "...";
-            }
-            String worldTime = "World: " + OverlayState.formatPlayTime(OverlayState.getWorldPlayTime());
-            if (!worldName.isEmpty()) {
-                worldTime += " (" + worldName + ")";
-            }
-            guiGraphics.drawString(this.font, worldTime, leftX, leftY, 0x00FF00); // Green color
+        // Show real time (if enabled)
+        if (Config.showRealTime) {
+            String currentTime = "Time: " + LocalTime.now().format(TIME_FORMATTER);
+            guiGraphics.drawString(this.font, currentTime, leftX, leftY, textColor);
             leftY += lineHeight;
         }
 
-        if (OverlayState.getDimensionPlayTime() > 0) {
-            String dimensionName = OverlayState.getCurrentDimensionName();
-            String dimTime = "Dimension: " + OverlayState.formatPlayTime(OverlayState.getDimensionPlayTime());
-            if (!dimensionName.isEmpty()) {
-                dimTime += " (" + dimensionName + ")";
-            }
-            guiGraphics.drawString(this.font, dimTime, leftX, leftY, 0x00FFFF); // Cyan color
+        // Show FPS (if enabled)
+        if (Config.showFPS) {
+            String fps = "FPS: " + this.minecraft.getFps();
+            guiGraphics.drawString(this.font, fps, leftX, leftY, textColor);
             leftY += lineHeight;
+        }
+
+        // Show play time information (if enabled)
+        if (Config.showPlayTime) {
+            leftY += 3; // Small gap
+
+            String instanceTime = "Instance: " + OverlayState.formatPlayTime(OverlayState.getInstancePlayTime());
+            guiGraphics.drawString(this.font, instanceTime, leftX, leftY, 0xFFD700); // Gold color
+            leftY += lineHeight;
+
+            if (OverlayState.getWorldPlayTime() > 0) {
+                String worldName = OverlayState.getCurrentWorldName();
+                if (worldName.length() > 20) {
+                    worldName = worldName.substring(0, 17) + "...";
+                }
+                String worldTime = "World: " + OverlayState.formatPlayTime(OverlayState.getWorldPlayTime());
+                if (!worldName.isEmpty()) {
+                    worldTime += " (" + worldName + ")";
+                }
+                guiGraphics.drawString(this.font, worldTime, leftX, leftY, 0x00FF00); // Green color
+                leftY += lineHeight;
+            }
+
+            if (OverlayState.getDimensionPlayTime() > 0) {
+                String dimensionName = OverlayState.getCurrentDimensionName();
+                String dimTime = "Dimension: " + OverlayState.formatPlayTime(OverlayState.getDimensionPlayTime());
+                if (!dimensionName.isEmpty()) {
+                    dimTime += " (" + dimensionName + ")";
+                }
+                guiGraphics.drawString(this.font, dimTime, leftX, leftY, 0x00FFFF); // Cyan color
+                leftY += lineHeight;
+            }
         }
 
         // ===== TOP RIGHT CORNER =====
         if (this.minecraft.player != null) {
             int rightY = padding;
 
-            BlockPos pos = this.minecraft.player.blockPosition();
-            String coords = String.format("X: %d, Y: %d, Z: %d", pos.getX(), pos.getY(), pos.getZ());
-            int coordsWidth = this.font.width(coords);
-            guiGraphics.drawString(this.font, coords, this.width - coordsWidth - padding, rightY, textColor);
-            rightY += lineHeight;
+            // Show coordinates (if enabled)
+            if (Config.showCoordinates) {
+                BlockPos pos = this.minecraft.player.blockPosition();
+                String coords = String.format("X: %d, Y: %d, Z: %d", pos.getX(), pos.getY(), pos.getZ());
+                int coordsWidth = this.font.width(coords);
+                guiGraphics.drawString(this.font, coords, this.width - coordsWidth - padding, rightY, textColor);
+                rightY += lineHeight;
+            }
 
-            String dimension = "Dimension: " + this.minecraft.player.level().dimension().location().getPath();
-            int dimWidth = this.font.width(dimension);
-            guiGraphics.drawString(this.font, dimension, this.width - dimWidth - padding, rightY, textColor);
+            // Show dimension (if enabled)
+            if (Config.showDimension) {
+                String dimension = "Dimension: " + this.minecraft.player.level().dimension().location().getPath();
+                int dimWidth = this.font.width(dimension);
+                guiGraphics.drawString(this.font, dimension, this.width - dimWidth - padding, rightY, textColor);
+            }
         }
 
         // ===== TOP CENTER =====
         if (this.minecraft.player != null) {
             int centerY = padding;
 
-            String health = String.format("Health: %.1f / %.1f", this.minecraft.player.getHealth(), this.minecraft.player.getMaxHealth());
-            int healthWidth = this.font.width(health);
-            int healthX = (this.width - healthWidth) / 2;
-            guiGraphics.drawString(this.font, health, healthX, centerY, textColor);
-            centerY += lineHeight;
+            // Show health (if enabled)
+            if (Config.showHealth) {
+                String health = String.format("Health: %.1f / %.1f", this.minecraft.player.getHealth(), this.minecraft.player.getMaxHealth());
+                int healthWidth = this.font.width(health);
+                int healthX = (this.width - healthWidth) / 2;
+                guiGraphics.drawString(this.font, health, healthX, centerY, textColor);
+                centerY += lineHeight;
+            }
 
             String instruction = "Press Shift+Tab to close";
             int instructWidth = this.font.width(instruction);
