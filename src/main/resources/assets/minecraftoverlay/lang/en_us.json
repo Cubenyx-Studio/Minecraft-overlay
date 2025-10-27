@@ -1,6 +1,7 @@
 {
   "key.categories.minecraftoverlay": "Minecraft Overlay",
-  "key.minecraftoverlay.toggle_overlay": "Toggle Overlay",
+  "key.minecraftoverlay.toggle_overlay": "Toggle Overlay (Main Key)",
+  "key.minecraftoverlay.modifier_key": "Toggle Overlay (Modifier Key)",
   "overlay.button.browser": "Browser",
   "overlay.button.timer": "Timer",
   "overlay.button.stopwatch": "Stopwatch",

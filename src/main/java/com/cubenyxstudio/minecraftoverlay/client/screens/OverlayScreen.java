@@ -24,6 +24,7 @@ public class OverlayScreen extends Screen {
     private enum ButtonType {
         BROWSER("Browser", "🌐"),
         TIMER("Timer", "⏱"),
+        PIN("Pin", "📌"),
         STOPWATCH("Chrono", "⏲"),
         SETTINGS("Settings", "⚙");
 
@@ -85,6 +86,7 @@ public class OverlayScreen extends Screen {
         buttons.clear();
         buttons.add(new OverlayButton(ButtonType.BROWSER));
         buttons.add(new OverlayButton(ButtonType.TIMER));
+        buttons.add(new OverlayButton(ButtonType.PIN));
         buttons.add(new OverlayButton(ButtonType.STOPWATCH));
         buttons.add(new OverlayButton(ButtonType.SETTINGS));
     }
@@ -244,6 +246,9 @@ public class OverlayScreen extends Screen {
                 break;
             case TIMER:
                 this.minecraft.setScreen(new TimerScreen(this));
+                break;
+            case PIN:
+                this.minecraft.setScreen(new PinOptionsScreen(this));
                 break;
             case STOPWATCH:
                 this.minecraft.setScreen(new StopwatchScreen(this));

@@ -1,6 +1,7 @@
 {
   "key.categories.minecraftoverlay": "Minecraft Overlay",
-  "key.minecraftoverlay.toggle_overlay": "Activer/Désactiver l'Overlay",
+  "key.minecraftoverlay.toggle_overlay": "Activer l'Overlay (Touche Principale)",
+  "key.minecraftoverlay.modifier_key": "Activer l'Overlay (Modificateur)",
   "overlay.button.browser": "Navigateur",
   "overlay.button.timer": "Minuteur",
   "overlay.button.stopwatch": "Chronomètre",

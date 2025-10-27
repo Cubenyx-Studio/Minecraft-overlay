@@ -52,6 +52,31 @@ public class Config {
             .comment("Show current dimension")
             .define("showDimension", true);
 
+    // Pin Options (display elements even when overlay is closed)
+    private static final ModConfigSpec.BooleanValue PIN_FPS = BUILDER
+            .comment("Pin FPS to screen (always visible)")
+            .define("pinFPS", false);
+
+    private static final ModConfigSpec.BooleanValue PIN_COORDINATES = BUILDER
+            .comment("Pin coordinates to screen (always visible)")
+            .define("pinCoordinates", false);
+
+    private static final ModConfigSpec.BooleanValue PIN_REAL_TIME = BUILDER
+            .comment("Pin real time to screen (always visible)")
+            .define("pinRealTime", false);
+
+    private static final ModConfigSpec.BooleanValue PIN_PLAY_TIME = BUILDER
+            .comment("Pin play time to screen (always visible)")
+            .define("pinPlayTime", false);
+
+    private static final ModConfigSpec.BooleanValue PIN_HEALTH = BUILDER
+            .comment("Pin health to screen (always visible)")
+            .define("pinHealth", false);
+
+    private static final ModConfigSpec.BooleanValue PIN_DIMENSION = BUILDER
+            .comment("Pin dimension to screen (always visible)")
+            .define("pinDimension", false);
+
     static final ModConfigSpec SPEC = BUILDER.build();
 
     // Public static fields for easy access
@@ -65,6 +90,13 @@ public class Config {
     public static boolean showPlayTime = true;
     public static boolean showHealth = true;
     public static boolean showDimension = true;
+    // Pin options
+    public static boolean pinFPS = false;
+    public static boolean pinCoordinates = false;
+    public static boolean pinRealTime = false;
+    public static boolean pinPlayTime = false;
+    public static boolean pinHealth = false;
+    public static boolean pinDimension = false;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
@@ -78,6 +110,12 @@ public class Config {
         showPlayTime = SHOW_PLAY_TIME.get();
         showHealth = SHOW_HEALTH.get();
         showDimension = SHOW_DIMENSION.get();
+        pinFPS = PIN_FPS.get();
+        pinCoordinates = PIN_COORDINATES.get();
+        pinRealTime = PIN_REAL_TIME.get();
+        pinPlayTime = PIN_PLAY_TIME.get();
+        pinHealth = PIN_HEALTH.get();
+        pinDimension = PIN_DIMENSION.get();
     }
 
     // Method to save configuration programmatically
@@ -92,6 +130,12 @@ public class Config {
         SHOW_PLAY_TIME.set(showPlayTime);
         SHOW_HEALTH.set(showHealth);
         SHOW_DIMENSION.set(showDimension);
+        PIN_FPS.set(pinFPS);
+        PIN_COORDINATES.set(pinCoordinates);
+        PIN_REAL_TIME.set(pinRealTime);
+        PIN_PLAY_TIME.set(pinPlayTime);
+        PIN_HEALTH.set(pinHealth);
+        PIN_DIMENSION.set(pinDimension);
         SPEC.save();
     }
 }

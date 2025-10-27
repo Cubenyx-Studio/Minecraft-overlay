@@ -15,7 +15,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 
 /**
- * Handles key bindings for the overlay (default: Shift+Tab, but configurable)
+ * Handles key bindings for the overlay (fully configurable via Minecraft Controls)
  */
 @EventBusSubscriber(modid = MinecraftOverlay.MODID, value = Dist.CLIENT)
 public class KeyBindings {
@@ -23,20 +23,32 @@ public class KeyBindings {
     public static final String CATEGORY = "key.categories." + MinecraftOverlay.MODID;
 
     public static KeyMapping TOGGLE_OVERLAY;
+    public static KeyMapping MODIFIER_KEY;
 
     @EventBusSubscriber(modid = MinecraftOverlay.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ModEvents {
         @SubscribeEvent
         public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
+            // Main key (default: Tab)
             TOGGLE_OVERLAY = new KeyMapping(
                 "key." + MinecraftOverlay.MODID + ".toggle_overlay",
                 KeyConflictContext.IN_GAME,
                 InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_TAB, // Default: Tab key
+                GLFW.GLFW_KEY_TAB,
+                CATEGORY
+            );
+
+            // Modifier key (default: Left Shift)
+            MODIFIER_KEY = new KeyMapping(
+                "key." + MinecraftOverlay.MODID + ".modifier_key",
+                KeyConflictContext.IN_GAME,
+                InputConstants.Type.KEYSYM,
+                GLFW.GLFW_KEY_LEFT_SHIFT,
                 CATEGORY
             );
 
             event.register(TOGGLE_OVERLAY);
+            event.register(MODIFIER_KEY);
         }
     }
 
@@ -44,13 +56,17 @@ public class KeyBindings {
     public static void onKeyInput(InputEvent.Key event) {
         Minecraft minecraft = Minecraft.getInstance();
 
-        // Get the configured key from KeyMapping
+        // Get the configured keys
         int configuredKey = TOGGLE_OVERLAY.getKey().getValue();
+        int modifierKey = MODIFIER_KEY.getKey().getValue();
 
-        // Check if the pressed key matches our configured key
+        // Check if the main key is pressed
         if (event.getKey() == configuredKey && event.getAction() == GLFW.GLFW_PRESS) {
-            // Check for the configured modifier key
-            if (isModifierPressed(minecraft)) {
+            // Check if modifier is required and if it's pressed
+            boolean modifierRequired = !Config.overlayModifier.equalsIgnoreCase("none");
+            boolean modifierPressed = isKeyPressed(minecraft, modifierKey);
+
+            if (!modifierRequired || modifierPressed) {
                 // Toggle overlay screen
                 if (minecraft.screen == null) {
                     minecraft.setScreen(new OverlayScreen());
@@ -62,34 +78,15 @@ public class KeyBindings {
     }
 
     /**
-     * Check if the configured modifier key is pressed
+     * Check if a specific key is currently pressed
      */
-    private static boolean isModifierPressed(Minecraft minecraft) {
-        long window = minecraft.getWindow().getWindow();
-
-        // Use "shift" as default if overlayModifier is null or empty
-        String modifier = (Config.overlayModifier != null && !Config.overlayModifier.isEmpty())
-                          ? Config.overlayModifier.toLowerCase()
-                          : "shift";
-
-        switch (modifier) {
-            case "shift":
-                return GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS ||
-                       GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_SHIFT) == GLFW.GLFW_PRESS;
-            case "ctrl":
-            case "control":
-                return GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS ||
-                       GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_CONTROL) == GLFW.GLFW_PRESS;
-            case "alt":
-                return GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_ALT) == GLFW.GLFW_PRESS ||
-                       GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_ALT) == GLFW.GLFW_PRESS;
-            case "none":
-                return true; // No modifier required
-            default:
-                // Default to Shift if invalid config
-                return GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS ||
-                       GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_SHIFT) == GLFW.GLFW_PRESS;
+    private static boolean isKeyPressed(Minecraft minecraft, int keyCode) {
+        if (keyCode == InputConstants.UNKNOWN.getValue()) {
+            return false;
         }
+
+        long window = minecraft.getWindow().getWindow();
+        return GLFW.glfwGetKey(window, keyCode) == GLFW.GLFW_PRESS;
     }
 }
 

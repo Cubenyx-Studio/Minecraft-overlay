@@ -58,13 +58,6 @@ public class SettingsScreen extends Screen {
                         Component.literal("Show Real Time"),
                         (button, value) -> Config.showRealTime = value));
 
-        // Modifier key selector
-        this.addRenderableWidget(CycleButton.<String>builder(this::getModifierDisplayName)
-                .withValues("Shift", "Ctrl", "Alt", "None")
-                .withInitialValue(Config.overlayModifier)
-                .create(leftX, startY + spacing * 4, columnWidth, buttonHeight,
-                        Component.literal("Modifier Key"),
-                        (button, value) -> Config.overlayModifier = value));
 
         // === RIGHT COLUMN: TIME TRACKING ===
         int rightX = centerX + columnSpacing / 2;
@@ -90,6 +83,7 @@ public class SettingsScreen extends Screen {
                         Component.literal("Show Dimension"),
                         (button, value) -> Config.showDimension = value));
 
+
         // === BOTTOM BUTTONS ===
         int bottomButtonWidth = 120;
         int bottomButtonSpacing = 10;
@@ -114,10 +108,6 @@ public class SettingsScreen extends Screen {
             this.minecraft.player.sendSystemMessage(Component.literal("§a[Settings] Settings saved successfully!"));
         }
         this.onClose();
-    }
-
-    private Component getModifierDisplayName(String modifier) {
-        return Component.literal(modifier);
     }
 
     @Override
@@ -155,11 +145,13 @@ public class SettingsScreen extends Screen {
         guiGraphics.fill(rightX, lineY, rightX + columnWidth, lineY + 1, 0xFF404040);
 
         // Instructions for key binding
-        String instruction1 = "To change the main key (default: Tab),";
-        String instruction2 = "go to Options > Controls > Minecraft Overlay";
-        int instrY = this.height - 60;
+        String instruction1 = "To change keys (Main + Modifier):";
+        String instruction2 = "Options > Controls > Minecraft Overlay";
+        String instruction3 = "Use the 📌 Pin button to pin elements on screen";
+        int instrY = this.height - 75;
         guiGraphics.drawCenteredString(this.font, instruction1, this.width / 2, instrY, 0xFFAAAAA);
-        guiGraphics.drawCenteredString(this.font, instruction2, this.width / 2, instrY + 10, 0xFFAAAAA);
+        guiGraphics.drawCenteredString(this.font, instruction2, this.width / 2, instrY + 12, 0xFFAAAAA);
+        guiGraphics.drawCenteredString(this.font, instruction3, this.width / 2, instrY + 30, 0xFFFF6B6B);
     }
 
     @Override
