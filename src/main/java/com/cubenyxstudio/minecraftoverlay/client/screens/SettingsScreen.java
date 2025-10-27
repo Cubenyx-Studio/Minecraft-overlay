@@ -58,6 +58,14 @@ public class SettingsScreen extends Screen {
                         Component.literal("Show Real Time"),
                         (button, value) -> Config.showRealTime = value));
 
+        // Modifier key selector
+        this.addRenderableWidget(CycleButton.<String>builder(this::getModifierDisplayName)
+                .withValues("Shift", "Ctrl", "Alt", "None")
+                .withInitialValue(Config.overlayModifier)
+                .create(leftX, startY + spacing * 4, columnWidth, buttonHeight,
+                        Component.literal("Modifier Key"),
+                        (button, value) -> Config.overlayModifier = value));
+
         // === RIGHT COLUMN: TIME TRACKING ===
         int rightX = centerX + columnSpacing / 2;
 
@@ -108,6 +116,10 @@ public class SettingsScreen extends Screen {
         this.onClose();
     }
 
+    private Component getModifierDisplayName(String modifier) {
+        return Component.literal(modifier);
+    }
+
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
@@ -141,6 +153,13 @@ public class SettingsScreen extends Screen {
 
         // Right separator line
         guiGraphics.fill(rightX, lineY, rightX + columnWidth, lineY + 1, 0xFF404040);
+
+        // Instructions for key binding
+        String instruction1 = "To change the main key (default: Tab),";
+        String instruction2 = "go to Options > Controls > Minecraft Overlay";
+        int instrY = this.height - 60;
+        guiGraphics.drawCenteredString(this.font, instruction1, this.width / 2, instrY, 0xFFAAAAA);
+        guiGraphics.drawCenteredString(this.font, instruction2, this.width / 2, instrY + 10, 0xFFAAAAA);
     }
 
     @Override

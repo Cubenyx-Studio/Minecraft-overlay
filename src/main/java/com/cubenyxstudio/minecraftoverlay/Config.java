@@ -22,6 +22,10 @@ public class Config {
             .comment("Overlay position (TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT)")
             .define("overlayPosition", "TOP_LEFT");
 
+    private static final ModConfigSpec.ConfigValue<String> OVERLAY_MODIFIER = BUILDER
+            .comment("Modifier key for opening overlay (Shift, Ctrl, Alt, None)")
+            .define("overlayModifier", "Shift");
+
     // Display Options
     private static final ModConfigSpec.BooleanValue SHOW_FPS = BUILDER
             .comment("Show FPS counter")
@@ -54,6 +58,7 @@ public class Config {
     public static boolean overlayEnabled;
     public static int overlayOpacity;
     public static String overlayPosition;
+    public static String overlayModifier;
     public static boolean showFPS;
     public static boolean showCoordinates;
     public static boolean showRealTime;
@@ -66,6 +71,7 @@ public class Config {
         overlayEnabled = OVERLAY_ENABLED.get();
         overlayOpacity = OVERLAY_OPACITY.get();
         overlayPosition = OVERLAY_POSITION.get();
+        overlayModifier = OVERLAY_MODIFIER.get();
         showFPS = SHOW_FPS.get();
         showCoordinates = SHOW_COORDINATES.get();
         showRealTime = SHOW_REAL_TIME.get();
@@ -79,6 +85,7 @@ public class Config {
         OVERLAY_ENABLED.set(overlayEnabled);
         OVERLAY_OPACITY.set(overlayOpacity);
         OVERLAY_POSITION.set(overlayPosition);
+        OVERLAY_MODIFIER.set(overlayModifier);
         SHOW_FPS.set(showFPS);
         SHOW_COORDINATES.set(showCoordinates);
         SHOW_REAL_TIME.set(showRealTime);

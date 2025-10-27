@@ -1,5 +1,6 @@
 package com.cubenyxstudio.minecraftoverlay.client;
 
+import com.cubenyxstudio.minecraftoverlay.Config;
 import com.cubenyxstudio.minecraftoverlay.client.screens.OverlayScreen;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.cubenyxstudio.minecraftoverlay.MinecraftOverlay;
@@ -14,7 +15,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 
 /**
- * Handles key bindings for the overlay (like Steam's Shift+Tab)
+ * Handles key bindings for the overlay (default: Shift+Tab, but configurable)
  */
 @EventBusSubscriber(modid = MinecraftOverlay.MODID, value = Dist.CLIENT)
 public class KeyBindings {
@@ -31,7 +32,7 @@ public class KeyBindings {
                 "key." + MinecraftOverlay.MODID + ".toggle_overlay",
                 KeyConflictContext.IN_GAME,
                 InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_TAB, // Tab key (Shift will be checked separately)
+                GLFW.GLFW_KEY_TAB, // Default: Tab key
                 CATEGORY
             );
 
@@ -43,21 +44,45 @@ public class KeyBindings {
     public static void onKeyInput(InputEvent.Key event) {
         Minecraft minecraft = Minecraft.getInstance();
 
-        // Check for Shift+Tab combination
-        if (event.getKey() == GLFW.GLFW_KEY_TAB && event.getAction() == GLFW.GLFW_PRESS) {
-            // Check if Shift is pressed
-            long window = minecraft.getWindow().getWindow();
-            boolean shiftPressed = GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS ||
-                                   GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_SHIFT) == GLFW.GLFW_PRESS;
-
-            if (shiftPressed) {
-                // Toggle overlay screen
-                if (minecraft.screen == null) {
-                    minecraft.setScreen(new OverlayScreen());
-                } else if (minecraft.screen instanceof OverlayScreen) {
-                    minecraft.setScreen(null);
+        // Check if the configured key is pressed
+        if (TOGGLE_OVERLAY.matches(event.getKey(), event.getScanCode())) {
+            if (event.getAction() == GLFW.GLFW_PRESS) {
+                // Check for the configured modifier key
+                if (isModifierPressed(minecraft)) {
+                    // Toggle overlay screen
+                    if (minecraft.screen == null) {
+                        minecraft.setScreen(new OverlayScreen());
+                    } else if (minecraft.screen instanceof OverlayScreen) {
+                        minecraft.setScreen(null);
+                    }
                 }
             }
+        }
+    }
+
+    /**
+     * Check if the configured modifier key is pressed
+     */
+    private static boolean isModifierPressed(Minecraft minecraft) {
+        long window = minecraft.getWindow().getWindow();
+
+        switch (Config.overlayModifier.toLowerCase()) {
+            case "shift":
+                return GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS ||
+                       GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_SHIFT) == GLFW.GLFW_PRESS;
+            case "ctrl":
+            case "control":
+                return GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS ||
+                       GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_CONTROL) == GLFW.GLFW_PRESS;
+            case "alt":
+                return GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_ALT) == GLFW.GLFW_PRESS ||
+                       GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_ALT) == GLFW.GLFW_PRESS;
+            case "none":
+                return true; // No modifier required
+            default:
+                // Default to Shift if invalid config
+                return GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS ||
+                       GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_SHIFT) == GLFW.GLFW_PRESS;
         }
     }
 }
