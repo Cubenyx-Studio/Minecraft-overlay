@@ -66,14 +66,17 @@ public class StopwatchScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
-        // Draw title
+        // Render widgets first (buttons)
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+
+        // Draw title AFTER background but OVER everything else
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
 
         // Get current time from persistent state
         long currentTime = OverlayState.getStopwatchTime();
         boolean running = OverlayState.isStopwatchRunning();
 
-        // Draw stopwatch time
+        // Draw stopwatch time OVER the background
         String timeStr = formatTime(currentTime);
         int scale = 2;
         guiGraphics.pose().pushPose();
@@ -83,7 +86,7 @@ public class StopwatchScreen extends Screen {
         guiGraphics.drawString(this.font, timeStr, scaledX, scaledY, running ? 0x00FF00 : 0xFFFFFF);
         guiGraphics.pose().popPose();
 
-        // Draw lap times
+        // Draw lap times OVER the background
         java.util.List<Long> lapTimes = OverlayState.getStopwatchLaps();
         if (!lapTimes.isEmpty()) {
             guiGraphics.drawString(this.font, "Lap Times:", this.width / 2 - 100, this.height / 2 + 100, 0xAAAAAA);
@@ -98,8 +101,6 @@ public class StopwatchScreen extends Screen {
 
         // Update button states every frame
         updateButtonStates();
-
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     private String formatTime(long millis) {

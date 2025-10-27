@@ -125,15 +125,18 @@ public class TimerScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
-        // Draw title
+        // Render widgets first (buttons, text boxes)
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+
+        // Draw title AFTER background but OVER everything else
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
 
-        // Draw labels
+        // Draw labels OVER the background
         guiGraphics.drawString(this.font, "Hours", this.width / 2 - 120, this.height / 2 - 55, 0xFFFFFF);
         guiGraphics.drawString(this.font, "Minutes", this.width / 2 - 30, this.height / 2 - 55, 0xFFFFFF);
         guiGraphics.drawString(this.font, "Seconds", this.width / 2 + 60, this.height / 2 - 55, 0xFFFFFF);
 
-        // Draw remaining time from persistent state
+        // Draw remaining time from persistent state OVER the background
         int remainingSeconds = OverlayState.getTimerRemainingSeconds();
         int hours = remainingSeconds / 3600;
         int minutes = (remainingSeconds % 3600) / 60;
@@ -141,8 +144,6 @@ public class TimerScreen extends Screen {
         String timeStr = String.format("Remaining: %02d:%02d:%02d", hours, minutes, seconds);
         boolean running = OverlayState.isTimerRunning();
         guiGraphics.drawCenteredString(this.font, timeStr, this.width / 2, this.height / 2 - 10, running ? 0x00FF00 : 0xFFFFFF);
-
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     @Override

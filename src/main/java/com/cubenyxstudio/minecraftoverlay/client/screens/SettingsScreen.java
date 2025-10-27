@@ -14,6 +14,13 @@ public class SettingsScreen extends Screen {
     private final Screen previousScreen;
     private Button saveButton;
 
+    // Config values (you could move these to the Config class later)
+    private boolean showFPS = true;
+    private boolean showCoordinates = true;
+    private boolean showTime = true;
+    private boolean showHealth = true;
+    private boolean showDimension = true;
+
     public SettingsScreen(Screen previousScreen) {
         super(Component.literal("Overlay Settings"));
         this.previousScreen = previousScreen;
@@ -22,80 +29,86 @@ public class SettingsScreen extends Screen {
     @Override
     protected void init() {
         int centerX = this.width / 2;
-        int startY = 60;
-        int spacing = 30;
+        int startY = 70;
+        int spacing = 28;
+        int buttonWidth = 280;
+        int buttonHeight = 20;
+
+        // Create a nice centered panel
+        int panelWidth = 320;
+        int panelHeight = 250;
+        int panelX = (this.width - panelWidth) / 2;
+        int panelY = 55;
+
+        // === DISPLAY OPTIONS SECTION ===
 
         // Overlay enabled toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.overlayEnabled)
                 .withInitialValue(Config.overlayEnabled)
-                .create(centerX - 150, startY, 300, 20,
+                .create(centerX - buttonWidth / 2, startY, buttonWidth, buttonHeight,
                         Component.literal("Overlay Enabled"),
                         (button, value) -> Config.overlayEnabled = value));
 
         // Show FPS toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(true)
-                .withInitialValue(true)
-                .create(centerX - 150, startY + spacing, 300, 20,
+        this.addRenderableWidget(CycleButton.onOffBuilder(showFPS)
+                .withInitialValue(showFPS)
+                .create(centerX - buttonWidth / 2, startY + spacing, buttonWidth, buttonHeight,
                         Component.literal("Show FPS"),
-                        (button, value) -> {
-                            // This would be stored in Config
-                        }));
+                        (button, value) -> showFPS = value));
 
         // Show coordinates toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(true)
-                .withInitialValue(true)
-                .create(centerX - 150, startY + spacing * 2, 300, 20,
+        this.addRenderableWidget(CycleButton.onOffBuilder(showCoordinates)
+                .withInitialValue(showCoordinates)
+                .create(centerX - buttonWidth / 2, startY + spacing * 2, buttonWidth, buttonHeight,
                         Component.literal("Show Coordinates"),
-                        (button, value) -> {
-                            // This would be stored in Config
-                        }));
+                        (button, value) -> showCoordinates = value));
 
         // Show time toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(true)
-                .withInitialValue(true)
-                .create(centerX - 150, startY + spacing * 3, 300, 20,
-                        Component.literal("Show Time"),
-                        (button, value) -> {
-                            // This would be stored in Config
-                        }));
+        this.addRenderableWidget(CycleButton.onOffBuilder(showTime)
+                .withInitialValue(showTime)
+                .create(centerX - buttonWidth / 2, startY + spacing * 3, buttonWidth, buttonHeight,
+                        Component.literal("Show Real Time"),
+                        (button, value) -> showTime = value));
 
         // Show health toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(true)
-                .withInitialValue(true)
-                .create(centerX - 150, startY + spacing * 4, 300, 20,
+        this.addRenderableWidget(CycleButton.onOffBuilder(showHealth)
+                .withInitialValue(showHealth)
+                .create(centerX - buttonWidth / 2, startY + spacing * 4, buttonWidth, buttonHeight,
                         Component.literal("Show Health"),
-                        (button, value) -> {
-                            // This would be stored in Config
-                        }));
+                        (button, value) -> showHealth = value));
 
         // Show dimension toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(true)
-                .withInitialValue(true)
-                .create(centerX - 150, startY + spacing * 5, 300, 20,
+        this.addRenderableWidget(CycleButton.onOffBuilder(showDimension)
+                .withInitialValue(showDimension)
+                .create(centerX - buttonWidth / 2, startY + spacing * 5, buttonWidth, buttonHeight,
                         Component.literal("Show Dimension"),
-                        (button, value) -> {
-                            // This would be stored in Config
-                        }));
+                        (button, value) -> showDimension = value));
 
-        // Transparency slider would go here (more complex to implement)
+        // === BOTTOM BUTTONS ===
+        int bottomButtonWidth = 120;
+        int bottomButtonSpacing = 10;
+        int bottomY = this.height - 35;
 
         // Save button
-        this.saveButton = Button.builder(Component.literal("Save Settings"), button -> saveSettings())
-                .bounds(centerX - 100, this.height - 60, 200, 20)
+        this.saveButton = Button.builder(Component.literal("✓ Save"), button -> saveSettings())
+                .bounds(centerX - bottomButtonWidth - bottomButtonSpacing / 2, bottomY, bottomButtonWidth, 20)
                 .build();
         this.addRenderableWidget(this.saveButton);
 
         // Back button
-        this.addRenderableWidget(Button.builder(Component.literal("Back"), button -> this.onClose())
-                .bounds(centerX - 50, this.height - 30, 100, 20)
+        this.addRenderableWidget(Button.builder(Component.literal("✕ Cancel"), button -> this.onClose())
+                .bounds(centerX + bottomButtonSpacing / 2, bottomY, bottomButtonWidth, 20)
                 .build());
     }
 
     private void saveSettings() {
+        // Save all settings to Config class
+        // For now, just Config.overlayEnabled is actually used
+        // You can extend the Config class to include the other settings
+
         if (this.minecraft != null && this.minecraft.player != null) {
             this.minecraft.player.sendSystemMessage(Component.literal("§a[Settings] Settings saved successfully!"));
         }
-        // Here you would save to a config file
         this.onClose();
     }
 
@@ -103,13 +116,44 @@ public class SettingsScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
-        // Draw title
+        // Draw a nice panel background
+        int panelWidth = 340;
+        int panelHeight = 270;
+        int panelX = (this.width - panelWidth) / 2;
+        int panelY = 45;
+
+        // Panel shadow
+        guiGraphics.fill(panelX + 2, panelY + 2, panelX + panelWidth + 2, panelY + panelHeight + 2, 0x80000000);
+
+        // Panel background
+        guiGraphics.fill(panelX, panelY, panelX + panelWidth, panelY + panelHeight, 0xDD202020);
+
+        // Panel border
+        guiGraphics.fill(panelX, panelY, panelX + panelWidth, panelY + 1, 0xFF505050);
+        guiGraphics.fill(panelX, panelY + panelHeight - 1, panelX + panelWidth, panelY + panelHeight, 0xFF505050);
+        guiGraphics.fill(panelX, panelY, panelX + 1, panelY + panelHeight, 0xFF505050);
+        guiGraphics.fill(panelX + panelWidth - 1, panelY, panelX + panelWidth, panelY + panelHeight, 0xFF505050);
+
+        // Render widgets AFTER background
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+
+        // Draw title OVER everything
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
 
-        // Draw subtitle
-        guiGraphics.drawCenteredString(this.font, "Configure your overlay preferences", this.width / 2, 35, 0xAAAAAA);
+        // Draw section header
+        String sectionHeader = "Display Options";
+        guiGraphics.drawCenteredString(this.font, sectionHeader, this.width / 2, 55, 0xFFD700);
 
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        // Draw a separator line under the header
+        int lineY = 64;
+        int lineStartX = this.width / 2 - 140;
+        int lineEndX = this.width / 2 + 140;
+        guiGraphics.fill(lineStartX, lineY, lineEndX, lineY + 1, 0xFF404040);
+
+        // Draw info text at bottom
+        String infoText = "These settings control what information is displayed on the overlay";
+        int infoWidth = this.font.width(infoText);
+        guiGraphics.drawString(this.font, infoText, (this.width - infoWidth) / 2, this.height - 55, 0xFF999999);
     }
 
     @Override
@@ -121,7 +165,7 @@ public class SettingsScreen extends Screen {
 
     @Override
     public boolean isPauseScreen() {
-        return false;
+        return true;
     }
 }
 

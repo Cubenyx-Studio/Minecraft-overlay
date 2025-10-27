@@ -114,14 +114,17 @@ public class BrowserScreen extends Screen {
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
+        
+        // Render widgets first (buttons, text boxes)
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
 
-        // Draw title
+        // Draw title AFTER background but OVER everything else
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
 
-        // Draw content area background
+        // Draw content area background OVER the blur
         guiGraphics.fill(10, 100, this.width - 10, this.height - 45, 0xDD000000);
 
-        // Draw page content
+        // Draw page content OVER the background
         String[] lines = pageContent.split("\n");
         int yOffset = 110;
         for (String line : lines) {
@@ -129,8 +132,6 @@ public class BrowserScreen extends Screen {
             guiGraphics.drawString(this.font, line, 20, yOffset, 0xFFFFFF);
             yOffset += 12;
         }
-
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     @Override
