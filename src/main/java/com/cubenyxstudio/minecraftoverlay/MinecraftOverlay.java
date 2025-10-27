@@ -21,7 +21,7 @@ public class MinecraftOverlay {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public MinecraftOverlay(IEventBus modEventBus, ModContainer modContainer) {
-        LOGGER.info("Initializing Minecraft Overlay mod (Client-Only)");
+        LOGGER.info("overlay.logger.initializing");
 
         // Register client setup listener
         modEventBus.addListener(this::clientSetup);
@@ -31,14 +31,14 @@ public class MinecraftOverlay {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        LOGGER.info("Minecraft Overlay client setup complete");
+        LOGGER.info("overlay.logger.setup");
     }
 
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            LOGGER.info("Minecraft Overlay initialized on client side");
+            LOGGER.info("overlay.logger.initialized");
         }
     }
 }

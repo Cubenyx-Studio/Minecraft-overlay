@@ -7,4 +7,14 @@
   "overlay.button.stopwatch": "Stopwatch",
   "overlay.button.settings": "Settings"
 }
-
+  "overlay.logger.setup": "Minecraft Overlay client setup complete",
+  "overlay.logger.initializing": "Initializing Minecraft Overlay mod (Client-Only)",
+  "overlay.time": "⭐ Time: %s",
+  "overlay.fps": "⭐ FPS: %s",
+  "overlay.instance_time": "⭐ Instance: %s",
+  "overlay.world_time": "⭐ World: %s (%s)",
+  "overlay.dimension_time": "⭐ Dimension: %s (%s)",
+  "overlay.coordinates": "⭐ X: %s, Y: %s, Z: %s",
+  "overlay.dimension": "⭐ Dimension: %s",
+  "overlay.health": "⭐ Health: %s / %s"
+}
