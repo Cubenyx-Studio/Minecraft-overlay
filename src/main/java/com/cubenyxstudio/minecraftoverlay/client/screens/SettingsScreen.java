@@ -17,9 +17,10 @@ public class SettingsScreen extends Screen {
     // Config values (you could move these to the Config class later)
     private boolean showFPS = true;
     private boolean showCoordinates = true;
-    private boolean showTime = true;
+    private boolean showRealTime = true;
     private boolean showHealth = true;
     private boolean showDimension = true;
+    private boolean showPlayTime = true;
 
     public SettingsScreen(Screen previousScreen) {
         super(Component.literal("Overlay Settings"));
@@ -29,52 +30,64 @@ public class SettingsScreen extends Screen {
     @Override
     protected void init() {
         int centerX = this.width / 2;
-        int startY = 70;
-        int spacing = 28;
-        int buttonWidth = 280;
+        int columnWidth = 200;
+        int columnSpacing = 20;
+        int startY = 80;
+        int spacing = 26;
         int buttonHeight = 20;
 
-        // === DISPLAY OPTIONS SECTION ===
+        // === LEFT COLUMN: DISPLAY OPTIONS ===
+        int leftX = centerX - columnWidth - columnSpacing / 2;
 
         // Overlay enabled toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.overlayEnabled)
                 .withInitialValue(Config.overlayEnabled)
-                .create(centerX - buttonWidth / 2, startY, buttonWidth, buttonHeight,
+                .create(leftX, startY, columnWidth, buttonHeight,
                         Component.literal("Overlay Enabled"),
                         (button, value) -> Config.overlayEnabled = value));
 
         // Show FPS toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(showFPS)
                 .withInitialValue(showFPS)
-                .create(centerX - buttonWidth / 2, startY + spacing, buttonWidth, buttonHeight,
+                .create(leftX, startY + spacing, columnWidth, buttonHeight,
                         Component.literal("Show FPS"),
                         (button, value) -> showFPS = value));
 
         // Show coordinates toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(showCoordinates)
                 .withInitialValue(showCoordinates)
-                .create(centerX - buttonWidth / 2, startY + spacing * 2, buttonWidth, buttonHeight,
+                .create(leftX, startY + spacing * 2, columnWidth, buttonHeight,
                         Component.literal("Show Coordinates"),
                         (button, value) -> showCoordinates = value));
 
-        // Show time toggle
-        this.addRenderableWidget(CycleButton.onOffBuilder(showTime)
-                .withInitialValue(showTime)
-                .create(centerX - buttonWidth / 2, startY + spacing * 3, buttonWidth, buttonHeight,
+        // Show real time toggle
+        this.addRenderableWidget(CycleButton.onOffBuilder(showRealTime)
+                .withInitialValue(showRealTime)
+                .create(leftX, startY + spacing * 3, columnWidth, buttonHeight,
                         Component.literal("Show Real Time"),
-                        (button, value) -> showTime = value));
+                        (button, value) -> showRealTime = value));
+
+        // === RIGHT COLUMN: TIME TRACKING ===
+        int rightX = centerX + columnSpacing / 2;
+
+        // Show play time toggle
+        this.addRenderableWidget(CycleButton.onOffBuilder(showPlayTime)
+                .withInitialValue(showPlayTime)
+                .create(rightX, startY, columnWidth, buttonHeight,
+                        Component.literal("Show Play Time"),
+                        (button, value) -> showPlayTime = value));
 
         // Show health toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(showHealth)
                 .withInitialValue(showHealth)
-                .create(centerX - buttonWidth / 2, startY + spacing * 4, buttonWidth, buttonHeight,
+                .create(rightX, startY + spacing, columnWidth, buttonHeight,
                         Component.literal("Show Health"),
                         (button, value) -> showHealth = value));
 
         // Show dimension toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(showDimension)
                 .withInitialValue(showDimension)
-                .create(centerX - buttonWidth / 2, startY + spacing * 5, buttonWidth, buttonHeight,
+                .create(rightX, startY + spacing * 2, columnWidth, buttonHeight,
                         Component.literal("Show Dimension"),
                         (button, value) -> showDimension = value));
 
@@ -116,16 +129,30 @@ public class SettingsScreen extends Screen {
         // Draw title OVER everything
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
 
-        // Draw section header
-        String sectionHeader = "Display Options";
-        guiGraphics.drawCenteredString(this.font, sectionHeader, this.width / 2, 55, 0xFFD700);
+        // Draw section headers
+        int centerX = this.width / 2;
+        int columnWidth = 200;
+        int columnSpacing = 20;
+        int leftX = centerX - columnWidth - columnSpacing / 2;
+        int rightX = centerX + columnSpacing / 2;
 
-        // Draw a separator line under the header
-        int lineY = 64;
-        int lineStartX = this.width / 2 - 140;
-        int lineEndX = this.width / 2 + 140;
-        guiGraphics.fill(lineStartX, lineY, lineEndX, lineY + 1, 0xFF404040);
-       }
+        // Left column header: Display Options
+        String leftHeader = "Display Options";
+        int leftHeaderX = leftX + columnWidth / 2;
+        guiGraphics.drawCenteredString(this.font, leftHeader, leftHeaderX, 55, 0xFFD700);
+
+        // Left separator line
+        int lineY = 70;
+        guiGraphics.fill(leftX, lineY, leftX + columnWidth, lineY + 1, 0xFF404040);
+
+        // Right column header: Time Tracking
+        String rightHeader = "Time Tracking";
+        int rightHeaderX = rightX + columnWidth / 2;
+        guiGraphics.drawCenteredString(this.font, rightHeader, rightHeaderX, 55, 0x00FF00);
+
+        // Right separator line
+        guiGraphics.fill(rightX, lineY, rightX + columnWidth, lineY + 1, 0xFF404040);
+    }
 
     @Override
     public void onClose() {
