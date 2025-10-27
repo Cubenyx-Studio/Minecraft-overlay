@@ -33,10 +33,10 @@ public class OverlayRenderer {
 
     // Enum for button types
     private enum ButtonType {
-        BROWSER("Browser", "🌐"),
-        TIMER("Timer", "⏱"),
-        STOPWATCH("Chrono", "⏲"),
-        SETTINGS("Settings", "⚙");
+        BROWSER("overlay.button.browser", "🌐"),
+        TIMER("overlay.button.timer", "⏱"),
+        STOPWATCH("overlay.button.stopwatch", "⏲"),
+        SETTINGS("overlay.button.settings", "⚙");
 
         final String label;
         final String icon;
