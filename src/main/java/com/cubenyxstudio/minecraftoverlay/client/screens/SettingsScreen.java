@@ -34,12 +34,6 @@ public class SettingsScreen extends Screen {
         int buttonWidth = 280;
         int buttonHeight = 20;
 
-        // Create a nice centered panel
-        int panelWidth = 320;
-        int panelHeight = 250;
-        int panelX = (this.width - panelWidth) / 2;
-        int panelY = 55;
-
         // === DISPLAY OPTIONS SECTION ===
 
         // Overlay enabled toggle
@@ -116,24 +110,6 @@ public class SettingsScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
-        // Draw a nice panel background
-        int panelWidth = 340;
-        int panelHeight = 270;
-        int panelX = (this.width - panelWidth) / 2;
-        int panelY = 45;
-
-        // Panel shadow
-        guiGraphics.fill(panelX + 2, panelY + 2, panelX + panelWidth + 2, panelY + panelHeight + 2, 0x80000000);
-
-        // Panel background
-        guiGraphics.fill(panelX, panelY, panelX + panelWidth, panelY + panelHeight, 0xDD202020);
-
-        // Panel border
-        guiGraphics.fill(panelX, panelY, panelX + panelWidth, panelY + 1, 0xFF505050);
-        guiGraphics.fill(panelX, panelY + panelHeight - 1, panelX + panelWidth, panelY + panelHeight, 0xFF505050);
-        guiGraphics.fill(panelX, panelY, panelX + 1, panelY + panelHeight, 0xFF505050);
-        guiGraphics.fill(panelX + panelWidth - 1, panelY, panelX + panelWidth, panelY + panelHeight, 0xFF505050);
-
         // Render widgets AFTER background
         super.render(guiGraphics, mouseX, mouseY, partialTick);
 
@@ -150,10 +126,10 @@ public class SettingsScreen extends Screen {
         int lineEndX = this.width / 2 + 140;
         guiGraphics.fill(lineStartX, lineY, lineEndX, lineY + 1, 0xFF404040);
 
-        // Draw info text at bottom
+        // Draw info text ABOVE the buttons (visible)
         String infoText = "These settings control what information is displayed on the overlay";
         int infoWidth = this.font.width(infoText);
-        guiGraphics.drawString(this.font, infoText, (this.width - infoWidth) / 2, this.height - 55, 0xFF999999);
+        guiGraphics.drawString(this.font, infoText, (this.width - infoWidth) / 2, this.height - 65, 0xFFFFFFFF);
     }
 
     @Override
