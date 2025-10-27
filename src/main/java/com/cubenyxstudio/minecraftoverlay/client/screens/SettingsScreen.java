@@ -125,12 +125,7 @@ public class SettingsScreen extends Screen {
         int lineStartX = this.width / 2 - 140;
         int lineEndX = this.width / 2 + 140;
         guiGraphics.fill(lineStartX, lineY, lineEndX, lineY + 1, 0xFF404040);
-
-        // Draw info text ABOVE the buttons (visible)
-        String infoText = "These settings control what information is displayed on the overlay";
-        int infoWidth = this.font.width(infoText);
-        guiGraphics.drawString(this.font, infoText, (this.width - infoWidth) / 2, this.height - 65, 0xFFFFFFFF);
-    }
+       }
 
     @Override
     public void onClose() {
