@@ -123,6 +123,37 @@ public class OverlayScreen extends Screen {
 
         String fps = "FPS: " + this.minecraft.getFps();
         guiGraphics.drawString(this.font, fps, leftX, leftY, textColor);
+        leftY += lineHeight;
+
+        // Play time information
+        leftY += 3; // Small gap
+
+        String instanceTime = "Instance: " + OverlayState.formatPlayTime(OverlayState.getInstancePlayTime());
+        guiGraphics.drawString(this.font, instanceTime, leftX, leftY, 0xFFD700); // Gold color
+        leftY += lineHeight;
+
+        if (OverlayState.getWorldPlayTime() > 0) {
+            String worldName = OverlayState.getCurrentWorldName();
+            if (worldName.length() > 20) {
+                worldName = worldName.substring(0, 17) + "...";
+            }
+            String worldTime = "World: " + OverlayState.formatPlayTime(OverlayState.getWorldPlayTime());
+            if (!worldName.isEmpty()) {
+                worldTime += " (" + worldName + ")";
+            }
+            guiGraphics.drawString(this.font, worldTime, leftX, leftY, 0x00FF00); // Green color
+            leftY += lineHeight;
+        }
+
+        if (OverlayState.getDimensionPlayTime() > 0) {
+            String dimensionName = OverlayState.getCurrentDimensionName();
+            String dimTime = "Dimension: " + OverlayState.formatPlayTime(OverlayState.getDimensionPlayTime());
+            if (!dimensionName.isEmpty()) {
+                dimTime += " (" + dimensionName + ")";
+            }
+            guiGraphics.drawString(this.font, dimTime, leftX, leftY, 0x00FFFF); // Cyan color
+            leftY += lineHeight;
+        }
 
         // ===== TOP RIGHT CORNER =====
         if (this.minecraft.player != null) {

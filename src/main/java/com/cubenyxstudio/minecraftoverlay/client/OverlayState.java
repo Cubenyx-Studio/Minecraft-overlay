@@ -15,6 +15,13 @@ public class OverlayState {
     private static boolean timerRunning = false;
     private static long timerLastTickTime = 0;
 
+    // Play time tracking
+    private static long instanceStartTime = 0; // When Minecraft was launched
+    private static long worldJoinTime = 0; // When player joined current world/server
+    private static long dimensionJoinTime = 0; // When player entered current dimension
+    private static String currentWorldName = "";
+    private static String currentDimensionName = "";
+
     // Stopwatch methods
     public static void startStopwatch() {
         if (!stopwatchRunning) {
@@ -98,5 +105,70 @@ public class OverlayState {
     public static boolean isTimerRunning() {
         return timerRunning;
     }
+
+    // Play time tracking methods
+    public static void initInstanceStartTime() {
+        if (instanceStartTime == 0) {
+            instanceStartTime = System.currentTimeMillis();
+        }
+    }
+
+    public static void onWorldJoin(String worldName) {
+        worldJoinTime = System.currentTimeMillis();
+        currentWorldName = worldName;
+    }
+
+    public static void onDimensionChange(String dimensionName) {
+        dimensionJoinTime = System.currentTimeMillis();
+        currentDimensionName = dimensionName;
+    }
+
+    public static void onWorldLeave() {
+        worldJoinTime = 0;
+        dimensionJoinTime = 0;
+        currentWorldName = "";
+        currentDimensionName = "";
+    }
+
+    public static long getInstancePlayTime() {
+        if (instanceStartTime == 0) return 0;
+        return System.currentTimeMillis() - instanceStartTime;
+    }
+
+    public static long getWorldPlayTime() {
+        if (worldJoinTime == 0) return 0;
+        return System.currentTimeMillis() - worldJoinTime;
+    }
+
+    public static long getDimensionPlayTime() {
+        if (dimensionJoinTime == 0) return 0;
+        return System.currentTimeMillis() - dimensionJoinTime;
+    }
+
+    public static String getCurrentWorldName() {
+        return currentWorldName;
+    }
+
+    public static String getCurrentDimensionName() {
+        return currentDimensionName;
+    }
+
+    public static String formatPlayTime(long milliseconds) {
+        long seconds = milliseconds / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+
+        long displaySeconds = seconds % 60;
+        long displayMinutes = minutes % 60;
+
+        if (hours > 0) {
+            return String.format("%dh %02dm %02ds", hours, displayMinutes, displaySeconds);
+        } else if (minutes > 0) {
+            return String.format("%dm %02ds", displayMinutes, displaySeconds);
+        } else {
+            return String.format("%ds", displaySeconds);
+        }
+    }
 }
+
 
