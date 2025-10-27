@@ -44,17 +44,18 @@ public class KeyBindings {
     public static void onKeyInput(InputEvent.Key event) {
         Minecraft minecraft = Minecraft.getInstance();
 
-        // Check if the configured key is pressed
-        if (TOGGLE_OVERLAY.matches(event.getKey(), event.getScanCode())) {
-            if (event.getAction() == GLFW.GLFW_PRESS) {
-                // Check for the configured modifier key
-                if (isModifierPressed(minecraft)) {
-                    // Toggle overlay screen
-                    if (minecraft.screen == null) {
-                        minecraft.setScreen(new OverlayScreen());
-                    } else if (minecraft.screen instanceof OverlayScreen) {
-                        minecraft.setScreen(null);
-                    }
+        // Get the configured key from KeyMapping
+        int configuredKey = TOGGLE_OVERLAY.getKey().getValue();
+
+        // Check if the pressed key matches our configured key
+        if (event.getKey() == configuredKey && event.getAction() == GLFW.GLFW_PRESS) {
+            // Check for the configured modifier key
+            if (isModifierPressed(minecraft)) {
+                // Toggle overlay screen
+                if (minecraft.screen == null) {
+                    minecraft.setScreen(new OverlayScreen());
+                } else if (minecraft.screen instanceof OverlayScreen) {
+                    minecraft.setScreen(null);
                 }
             }
         }
@@ -66,7 +67,12 @@ public class KeyBindings {
     private static boolean isModifierPressed(Minecraft minecraft) {
         long window = minecraft.getWindow().getWindow();
 
-        switch (Config.overlayModifier.toLowerCase()) {
+        // Use "shift" as default if overlayModifier is null or empty
+        String modifier = (Config.overlayModifier != null && !Config.overlayModifier.isEmpty())
+                          ? Config.overlayModifier.toLowerCase()
+                          : "shift";
+
+        switch (modifier) {
             case "shift":
                 return GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS ||
                        GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_SHIFT) == GLFW.GLFW_PRESS;

@@ -55,16 +55,16 @@ public class Config {
     static final ModConfigSpec SPEC = BUILDER.build();
 
     // Public static fields for easy access
-    public static boolean overlayEnabled;
-    public static int overlayOpacity;
-    public static String overlayPosition;
-    public static String overlayModifier;
-    public static boolean showFPS;
-    public static boolean showCoordinates;
-    public static boolean showRealTime;
-    public static boolean showPlayTime;
-    public static boolean showHealth;
-    public static boolean showDimension;
+    public static boolean overlayEnabled = true;
+    public static int overlayOpacity = 90;
+    public static String overlayPosition = "TOP_LEFT";
+    public static String overlayModifier = "Shift";
+    public static boolean showFPS = true;
+    public static boolean showCoordinates = true;
+    public static boolean showRealTime = true;
+    public static boolean showPlayTime = true;
+    public static boolean showHealth = true;
+    public static boolean showDimension = true;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
