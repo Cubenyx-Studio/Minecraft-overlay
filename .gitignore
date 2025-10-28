@@ -4,13 +4,6 @@ build/
 out/
 classes/
 
-# Eclipse
-*.launch
-.settings/
-.metadata
-.classpath
-.project
-
 # IntelliJ IDEA
 .idea/
 *.iml
@@ -19,9 +12,6 @@ classes/
 
 # Visual Studio Code
 .vscode/
-
-# MacOS
-.DS_Store
 
 # Minecraft / Forge
 run/
