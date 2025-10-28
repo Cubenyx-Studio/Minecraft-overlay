@@ -2,13 +2,26 @@
   "key.categories.minecraftoverlay": "Minecraft Overlay",
   "key.minecraftoverlay.toggle_overlay": "Toggle Overlay (Main Key)",
   "key.minecraftoverlay.modifier_key": "Toggle Overlay (Modifier Key)",
+
   "overlay.button.browser": "Browser",
   "overlay.button.timer": "Timer",
-  "overlay.button.stopwatch": "Stopwatch",
-  "overlay.button.settings": "Settings"
-}
+  "overlay.button.stopwatch": "Chrono",
+  "overlay.button.settings": "Settings",
+  "overlay.button.pin": "Pin",
+  "overlay.button.back": "Back",
+  "overlay.button.close": "Close",
+  "overlay.button.start": "Start",
+  "overlay.button.stop": "Stop",
+  "overlay.button.reset": "Reset",
+  "overlay.button.lap": "Lap",
+  "overlay.button.go": "Go",
+  "overlay.button.save": "Save",
+  "overlay.button.cancel": "Cancel",
+
   "overlay.logger.setup": "Minecraft Overlay client setup complete",
   "overlay.logger.initializing": "Initializing Minecraft Overlay mod (Client-Only)",
+  "overlay.logger.initialized": "Minecraft Overlay mod initialized successfully",
+
   "overlay.time": "⭐ Time: %s",
   "overlay.fps": "⭐ FPS: %s",
   "overlay.instance_time": "⭐ Instance: %s",
@@ -16,5 +29,59 @@
   "overlay.dimension_time": "⭐ Dimension: %s (%s)",
   "overlay.coordinates": "⭐ X: %s, Y: %s, Z: %s",
   "overlay.dimension": "⭐ Dimension: %s",
-  "overlay.health": "⭐ Health: %s / %s"
+  "overlay.health": "⭐ Health: %s / %s",
+
+  "overlay.screen.settings.title": "Overlay Settings",
+  "overlay.screen.timer.title": "Timer",
+  "overlay.screen.stopwatch.title": "Stopwatch",
+  "overlay.screen.browser.title": "Browser",
+  "overlay.screen.pin.title": "Pin Options",
+  "overlay.screen.overlay.title": "Overlay",
+
+  "overlay.settings.enabled": "Overlay Enabled",
+  "overlay.settings.show_fps": "Show FPS",
+  "overlay.settings.show_coordinates": "Show Coordinates",
+  "overlay.settings.show_real_time": "Show Real Time",
+  "overlay.settings.show_play_time": "Show Play Time",
+  "overlay.settings.show_health": "Show Health",
+  "overlay.settings.show_dimension": "Show Dimension",
+
+  "overlay.settings.category.display": "Display Options",
+  "overlay.settings.category.time": "Time Tracking",
+
+  "overlay.settings.instruction1": "To change keys (Main + Modifier):",
+  "overlay.settings.instruction2": "Options > Controls > Minecraft Overlay",
+  "overlay.settings.instruction3": "Use the 📌 Pin button to pin elements on screen",
+
+  "overlay.pin.fps": "📌 Pin FPS",
+  "overlay.pin.coordinates": "📌 Pin Coordinates",
+  "overlay.pin.real_time": "📌 Pin Real Time",
+  "overlay.pin.play_time": "📌 Pin Play Time",
+  "overlay.pin.health": "📌 Pin Health",
+  "overlay.pin.dimension": "📌 Pin Dimension",
+  "overlay.pin.saved": "§a[Pin] Pin settings saved successfully!",
+
+  "overlay.stopwatch.lap_times": "Lap Times:",
+  "overlay.stopwatch.lap_number": "Lap %s: %s",
+
+  "overlay.timer.remaining": "Time Remaining: %02d:%02d:%02d",
+  "overlay.timer.enter_duration": "Enter duration (seconds):",
+  "overlay.timer.hours": "Hours",
+  "overlay.timer.minutes": "Minutes",
+  "overlay.timer.seconds": "Seconds",
+  "overlay.timer.finished": "§a[Timer] Timer finished!",
+
+  "overlay.browser.enter_url": "Enter URL:",
+  "overlay.browser.loading": "Loading...",
+  "overlay.browser.error": "Error loading page: %s",
+  "overlay.browser.go": "Go",
+  "overlay.browser.home": "Home",
+  "overlay.browser.minecraft": "Minecraft",
+  "overlay.browser.curseforge": "CurseForge",
+  "overlay.browser.modrinth": "Modrinth",
+  "overlay.browser.welcome": "Welcome to the in-game browser! Enter a URL above.",
+  "overlay.browser.opening": "§a[Browser] Opening %s in your default browser",
+  "overlay.browser.opened": "Opened %s in external browser",
+  "overlay.browser.error_message": "Failed to open %s"
 }
+
