@@ -147,11 +147,9 @@ public class SettingsScreen extends Screen {
         // Instructions for key binding
         String instruction1 = net.minecraft.client.resources.language.I18n.get("overlay.settings.instruction1");
         String instruction2 = net.minecraft.client.resources.language.I18n.get("overlay.settings.instruction2");
-        String instruction3 = net.minecraft.client.resources.language.I18n.get("overlay.settings.instruction3");
         int instrY = this.height - 75;
         guiGraphics.drawCenteredString(this.font, instruction1, this.width / 2, instrY, 0xFFAAAAA);
         guiGraphics.drawCenteredString(this.font, instruction2, this.width / 2, instrY + 12, 0xFFAAAAA);
-        guiGraphics.drawCenteredString(this.font, instruction3, this.width / 2, instrY + 30, 0xFFFF6B6B);
     }
 
     @Override

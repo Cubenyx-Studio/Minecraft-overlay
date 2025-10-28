@@ -69,6 +69,9 @@
   "overlay.timer.hours": "Hours",
   "overlay.timer.minutes": "Minutes",
   "overlay.timer.seconds": "Seconds",
+  "overlay.timer.start": "Start Timer",
+  "overlay.timer.stop": "Stop Timer",
+  "overlay.timer.reset": "Reset Timer",
   "overlay.timer.finished": "§a[Timer] Timer finished!",
 
   "overlay.browser.enter_url": "Enter URL:",
@@ -82,6 +85,8 @@
   "overlay.browser.welcome": "Welcome to the in-game browser! Enter a URL above.",
   "overlay.browser.opening": "§a[Browser] Opening %s in your default browser",
   "overlay.browser.opened": "Opened %s in external browser",
-  "overlay.browser.error_message": "Failed to open %s"
+  "overlay.browser.error_message": "Failed to open %s",
+
+  "overlay.message.settings_saved": "§a[Settings] Settings saved successfully!"
 }
 
