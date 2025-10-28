@@ -27,46 +27,53 @@ public class BrowserScreen extends Screen {
 
     @Override
     protected void init() {
-        int padding = 20; // Marge depuis les bords
+        int margin = 30; // Marge depuis les bords
+        int topY = 40;
 
-        // URL input box avec marges
-        this.urlBox = new EditBox(this.font, padding, 40, this.width - 140, 20, Component.translatable("overlay.browser.enter_url"));
+        // URL input box - prend toute la largeur disponible moins l'espace pour les 2 boutons
+        int buttonAreaWidth = 120; // Espace réservé pour Go + Home + espaces
+        this.urlBox = new EditBox(this.font, margin, topY, this.width - margin - buttonAreaWidth, 20, Component.translatable("overlay.browser.enter_url"));
         this.urlBox.setMaxLength(256);
         this.urlBox.setValue(currentUrl);
         this.addRenderableWidget(this.urlBox);
 
-        // Go button
+        // Boutons Go et Home alignés à droite
+        int goButtonWidth = 50;
+        int homeButtonWidth = 55;
+        int buttonGap = 5;
+
         this.goButton = Button.builder(Component.translatable("overlay.browser.go"), button -> loadUrl())
-                .bounds(this.width - 115, 40, 50, 20)
+                .bounds(this.width - margin - homeButtonWidth - buttonGap - goButtonWidth, topY, goButtonWidth, 20)
                 .build();
         this.addRenderableWidget(this.goButton);
 
-        // Home button
         this.homeButton = Button.builder(Component.translatable("overlay.browser.home"), button -> goHome())
-                .bounds(this.width - 60, 40, 50, 20)
+                .bounds(this.width - margin - homeButtonWidth, topY, homeButtonWidth, 20)
                 .build();
         this.addRenderableWidget(this.homeButton);
 
-        // Quick links avec meilleur espacement
-        int quickLinkSpacing = 10; // Espacement entre les boutons
-        int quickLinkWidth = 110; // Largeur de chaque bouton
-        int quickLinkY = 75; // Position Y
+        // Quick links - 3 boutons espacés horizontalement
+        int quickLinkY = 75;
+        int quickLinkWidth = 110;
+        int quickLinkGap = 15;
+        int totalQuickLinkWidth = (quickLinkWidth * 3) + (quickLinkGap * 2);
+        int quickLinkStartX = (this.width - totalQuickLinkWidth) / 2;
 
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.browser.minecraft"), button -> quickLoad("https://www.minecraft.net"))
-                .bounds(padding, quickLinkY, quickLinkWidth, 20)
+                .bounds(quickLinkStartX, quickLinkY, quickLinkWidth, 20)
                 .build());
 
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.browser.curseforge"), button -> quickLoad("https://www.curseforge.com"))
-                .bounds(padding + quickLinkWidth + quickLinkSpacing, quickLinkY, quickLinkWidth, 20)
+                .bounds(quickLinkStartX + quickLinkWidth + quickLinkGap, quickLinkY, quickLinkWidth, 20)
                 .build());
 
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.browser.modrinth"), button -> quickLoad("https://modrinth.com"))
-                .bounds(padding + (quickLinkWidth + quickLinkSpacing) * 2, quickLinkY, quickLinkWidth, 20)
+                .bounds(quickLinkStartX + (quickLinkWidth + quickLinkGap) * 2, quickLinkY, quickLinkWidth, 20)
                 .build());
 
         // Back button centré en bas
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.close"), button -> this.onClose())
-                .bounds(this.width / 2 - 75, this.height - 40, 150, 20)
+                .bounds(this.width / 2 - 75, this.height - 50, 150, 20)
                 .build());
     }
 

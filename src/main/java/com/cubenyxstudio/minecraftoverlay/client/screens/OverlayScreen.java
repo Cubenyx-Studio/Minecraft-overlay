@@ -43,13 +43,14 @@ public class OverlayScreen extends Screen {
 
         OverlayButton(ButtonType type) {
             this.type = type;
-            this.width = 80;  // Réduit de 100 à 80
-            this.height = 18; // Réduit de 20 à 18
+            this.width = 70;  // Taille fixe raisonnable
+            this.height = 20; // Hauteur standard
         }
 
-        void updatePosition(int x, int y) {
+        void updatePosition(int x, int y, int width) {
             this.x = x;
             this.y = y;
+            this.width = width; // Permet d'ajuster la largeur dynamiquement
         }
 
         boolean isMouseOver(double mouseX, double mouseY) {
@@ -68,7 +69,7 @@ public class OverlayScreen extends Screen {
             guiGraphics.fill(x, y, x + 1, y + height, borderColor);
             guiGraphics.fill(x + width - 1, y, x + width, y + height, borderColor);
 
-            // Button text
+            // Button text centré
             String text = type.icon + " " + type.label;
             int textWidth = minecraft.font.width(text);
             int textX = x + (width - textWidth) / 2;
@@ -213,24 +214,35 @@ public class OverlayScreen extends Screen {
     }
 
     private void renderButtons(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        int buttonWidth = 75; // Largeur de chaque bouton
-        int buttonSpacing = 15; // Espacement horizontal entre les boutons (augmenté de 8 à 15)
-        int totalButtonWidth = buttons.size() * buttonWidth + (buttons.size() - 1) * buttonSpacing;
-        int padding = 40; // Marge depuis le bord de l'écran
-        int startX = (this.width - totalButtonWidth) / 2;
-        int buttonY = this.height - 50; // Plus d'espace depuis le bas (changé de 30 à 50)
+        if (buttons.isEmpty()) return;
 
-        // S'assurer que les boutons ne touchent pas les bords
-        if (startX < padding) {
-            startX = padding;
+        // Configuration de l'espacement
+        int buttonWidth = 65;        // Largeur fixe de chaque bouton
+        int buttonSpacing = 12;      // Espace entre chaque bouton
+        int marginFromEdge = 50;     // Marge depuis les bords de l'écran
+
+        // Calcul de la largeur totale nécessaire
+        int totalWidth = (buttonWidth * buttons.size()) + (buttonSpacing * (buttons.size() - 1));
+
+        // Calcul de la position de départ (centrée)
+        int startX = (this.width - totalWidth) / 2;
+
+        // Vérification que les boutons ne dépassent pas
+        if (startX < marginFromEdge) {
+            startX = marginFromEdge;
         }
-        if (startX + totalButtonWidth > this.width - padding) {
-            startX = this.width - totalButtonWidth - padding;
+        if (startX + totalWidth > this.width - marginFromEdge) {
+            startX = this.width - totalWidth - marginFromEdge;
         }
 
+        // Position verticale (en bas de l'écran)
+        int buttonY = this.height - 60;
+
+        // Rendu de chaque bouton
         for (int i = 0; i < buttons.size(); i++) {
             OverlayButton button = buttons.get(i);
-            button.updatePosition(startX + i * (buttonWidth + buttonSpacing), buttonY);
+            int buttonX = startX + (i * (buttonWidth + buttonSpacing));
+            button.updatePosition(buttonX, buttonY, buttonWidth);
             boolean hovered = button.isMouseOver(mouseX, mouseY);
             button.render(guiGraphics, this.minecraft, hovered);
         }
