@@ -3,11 +3,6 @@
   "key.minecraftoverlay.toggle_overlay": "Activer l'Overlay (Touche Principale)",
   "key.minecraftoverlay.modifier_key": "Activer l'Overlay (Modificateur)",
 
-  "overlay.button.browser": "Navigateur",
-  "overlay.button.timer": "Minuteur",
-  "overlay.button.stopwatch": "Chrono",
-  "overlay.button.settings": "Paramètres",
-  "overlay.button.pin": "Épingler",
   "overlay.button.back": "Retour",
   "overlay.button.close": "Fermer",
   "overlay.button.start": "Démarrer",
@@ -17,6 +12,12 @@
   "overlay.button.go": "Aller",
   "overlay.button.save": "Sauvegarder",
   "overlay.button.cancel": "Annuler",
+
+  "overlay.button.label.browser": "Navigateur",
+  "overlay.button.label.timer": "Minuteur",
+  "overlay.button.label.pin": "Épingler",
+  "overlay.button.label.stopwatch": "Chrono",
+  "overlay.button.label.settings": "Paramètres",
 
   "overlay.logger.setup": "La configuration de l'overlay Minecraft côté client est terminée",
   "overlay.logger.initializing": "Initialisation du mod Minecraft Overlay (Client uniquement)",
@@ -69,9 +70,9 @@
   "overlay.timer.hours": "Heures",
   "overlay.timer.minutes": "Minutes",
   "overlay.timer.seconds": "Secondes",
-  "overlay.timer.start": "Démarrer Minuteur",
-  "overlay.timer.stop": "Arrêter Minuteur",
-  "overlay.timer.reset": "Réinitialiser Minuteur",
+  "overlay.timer.start": "Démarrer",
+  "overlay.timer.stop": "Arrêter",
+  "overlay.timer.reset": "Réinitialiser",
   "overlay.timer.finished": "§a[Minuteur] Minuteur terminé !",
 
   "overlay.browser.enter_url": "Entrer l'URL :",
@@ -86,6 +87,22 @@
   "overlay.browser.opening": "§a[Navigateur] Ouverture de %s dans votre navigateur par défaut",
   "overlay.browser.opened": "%s ouvert dans le navigateur externe",
   "overlay.browser.error_message": "Échec de l'ouverture de %s",
+
+  "overlay.pin.subtitle": "📌 Épingler des éléments pour les garder toujours visibles",
+  "overlay.pin.info1": "Les éléments épinglés apparaîtront avec une étoile dorée ⭐",
+  "overlay.pin.info2": "et resteront visibles même quand l'overlay est fermé",
+
+  "overlay.display.time": "Heure : %s",
+  "overlay.display.fps": "FPS : %s",
+  "overlay.display.instance": "Session : %s",
+  "overlay.display.world": "Monde : %s",
+  "overlay.display.world_with_name": "Monde : %s (%s)",
+  "overlay.display.dimension_time": "Dimension : %s",
+  "overlay.display.dimension_time_with_name": "Dimension : %s (%s)",
+  "overlay.display.coordinates": "X : %d, Y : %d, Z : %d",
+  "overlay.display.dimension_name": "Dimension : %s",
+  "overlay.display.health": "Santé : %.1f / %.1f",
+  "overlay.display.close_instruction": "Appuyez sur Shift+Tab pour fermer",
 
   "overlay.message.settings_saved": "§a[Paramètres] Paramètres sauvegardés avec succès !"
 }

@@ -3,11 +3,6 @@
   "key.minecraftoverlay.toggle_overlay": "Toggle Overlay (Main Key)",
   "key.minecraftoverlay.modifier_key": "Toggle Overlay (Modifier Key)",
 
-  "overlay.button.browser": "Browser",
-  "overlay.button.timer": "Timer",
-  "overlay.button.stopwatch": "Chrono",
-  "overlay.button.settings": "Settings",
-  "overlay.button.pin": "Pin",
   "overlay.button.back": "Back",
   "overlay.button.close": "Close",
   "overlay.button.start": "Start",
@@ -17,6 +12,12 @@
   "overlay.button.go": "Go",
   "overlay.button.save": "Save",
   "overlay.button.cancel": "Cancel",
+
+  "overlay.button.label.browser": "Browser",
+  "overlay.button.label.timer": "Timer",
+  "overlay.button.label.pin": "Pin",
+  "overlay.button.label.stopwatch": "Chrono",
+  "overlay.button.label.settings": "Settings",
 
   "overlay.logger.setup": "Minecraft Overlay client setup complete",
   "overlay.logger.initializing": "Initializing Minecraft Overlay mod (Client-Only)",
@@ -69,9 +70,9 @@
   "overlay.timer.hours": "Hours",
   "overlay.timer.minutes": "Minutes",
   "overlay.timer.seconds": "Seconds",
-  "overlay.timer.start": "Start Timer",
-  "overlay.timer.stop": "Stop Timer",
-  "overlay.timer.reset": "Reset Timer",
+  "overlay.timer.start": "Start",
+  "overlay.timer.stop": "Stop",
+  "overlay.timer.reset": "Reset",
   "overlay.timer.finished": "§a[Timer] Timer finished!",
 
   "overlay.browser.enter_url": "Enter URL:",
@@ -86,6 +87,22 @@
   "overlay.browser.opening": "§a[Browser] Opening %s in your default browser",
   "overlay.browser.opened": "Opened %s in external browser",
   "overlay.browser.error_message": "Failed to open %s",
+
+  "overlay.pin.subtitle": "📌 Pin elements to keep them always visible",
+  "overlay.pin.info1": "Pinned elements will appear with a golden ⭐ star",
+  "overlay.pin.info2": "and stay visible even when the overlay is closed",
+
+  "overlay.display.time": "Time: %s",
+  "overlay.display.fps": "FPS: %s",
+  "overlay.display.instance": "Instance: %s",
+  "overlay.display.world": "World: %s",
+  "overlay.display.world_with_name": "World: %s (%s)",
+  "overlay.display.dimension_time": "Dimension: %s",
+  "overlay.display.dimension_time_with_name": "Dimension: %s (%s)",
+  "overlay.display.coordinates": "X: %d, Y: %d, Z: %d",
+  "overlay.display.dimension_name": "Dimension: %s",
+  "overlay.display.health": "Health: %.1f / %.1f",
+  "overlay.display.close_instruction": "Press Shift+Tab to close",
 
   "overlay.message.settings_saved": "§a[Settings] Settings saved successfully!"
 }

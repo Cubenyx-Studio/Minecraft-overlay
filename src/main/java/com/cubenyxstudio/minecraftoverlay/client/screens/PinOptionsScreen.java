@@ -93,7 +93,7 @@ public class PinOptionsScreen extends Screen {
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
 
         // Draw subtitle
-        String subtitle = "📌 Pin elements to keep them always visible";
+        String subtitle = net.minecraft.client.resources.language.I18n.get("overlay.pin.subtitle");
         guiGraphics.drawCenteredString(this.font, subtitle, this.width / 2, 35, 0xFFFF6B6B);
 
         // Draw separator line
@@ -101,8 +101,8 @@ public class PinOptionsScreen extends Screen {
         guiGraphics.fill(this.width / 2 - 150, lineY, this.width / 2 + 150, lineY + 1, 0xFF404040);
 
         // Draw info about pinned elements
-        String info1 = "Pinned elements will appear with a golden ⭐ star";
-        String info2 = "and stay visible even when the overlay is closed";
+        String info1 = net.minecraft.client.resources.language.I18n.get("overlay.pin.info1");
+        String info2 = net.minecraft.client.resources.language.I18n.get("overlay.pin.info2");
         int infoY = this.height - 70;
         guiGraphics.drawCenteredString(this.font, info1, this.width / 2, infoY, 0xFFAAAAA);
         guiGraphics.drawCenteredString(this.font, info2, this.width / 2, infoY + 12, 0xFFAAAAA);

@@ -22,18 +22,22 @@ public class OverlayScreen extends Screen {
     private final List<OverlayButton> buttons = new ArrayList<>();
 
     private enum ButtonType {
-        BROWSER("Browser", "🌐"),
-        TIMER("Timer", "⏱"),
-        PIN("Pin", "📌"),
-        STOPWATCH("Chrono", "⏲"),
-        SETTINGS("Settings", "⚙");
+        BROWSER("overlay.button.label.browser", "🌐"),
+        TIMER("overlay.button.label.timer", "⏱"),
+        PIN("overlay.button.label.pin", "📌"),
+        STOPWATCH("overlay.button.label.stopwatch", "⏲"),
+        SETTINGS("overlay.button.label.settings", "⚙");
 
-        final String label;
+        final String translationKey;
         final String icon;
 
-        ButtonType(String label, String icon) {
-            this.label = label;
+        ButtonType(String translationKey, String icon) {
+            this.translationKey = translationKey;
             this.icon = icon;
+        }
+
+        String getLocalizedLabel() {
+            return net.minecraft.client.resources.language.I18n.get(translationKey);
         }
     }
 
@@ -69,8 +73,8 @@ public class OverlayScreen extends Screen {
             guiGraphics.fill(x, y, x + 1, y + height, borderColor);
             guiGraphics.fill(x + width - 1, y, x + width, y + height, borderColor);
 
-            // Button text centré
-            String text = type.icon + " " + type.label;
+            // Button text centré avec traduction
+            String text = type.icon + " " + type.getLocalizedLabel();
             int textWidth = minecraft.font.width(text);
             int textX = x + (width - textWidth) / 2;
             int textY = y + (height - 8) / 2;
@@ -123,14 +127,14 @@ public class OverlayScreen extends Screen {
 
         // Show real time (if enabled)
         if (Config.showRealTime) {
-            String currentTime = "Time: " + LocalTime.now().format(TIME_FORMATTER);
+            String currentTime = net.minecraft.client.resources.language.I18n.get("overlay.display.time", LocalTime.now().format(TIME_FORMATTER));
             guiGraphics.drawString(this.font, currentTime, leftX, leftY, textColor);
             leftY += lineHeight;
         }
 
         // Show FPS (if enabled)
         if (Config.showFPS) {
-            String fps = "FPS: " + this.minecraft.getFps();
+            String fps = net.minecraft.client.resources.language.I18n.get("overlay.display.fps", this.minecraft.getFps());
             guiGraphics.drawString(this.font, fps, leftX, leftY, textColor);
             leftY += lineHeight;
         }
@@ -139,7 +143,7 @@ public class OverlayScreen extends Screen {
         if (Config.showPlayTime) {
             leftY += 3; // Small gap
 
-            String instanceTime = "Instance: " + OverlayState.formatPlayTime(OverlayState.getInstancePlayTime());
+            String instanceTime = net.minecraft.client.resources.language.I18n.get("overlay.display.instance", OverlayState.formatPlayTime(OverlayState.getInstancePlayTime()));
             guiGraphics.drawString(this.font, instanceTime, leftX, leftY, 0xFFD700); // Gold color
             leftY += lineHeight;
 
@@ -148,9 +152,11 @@ public class OverlayScreen extends Screen {
                 if (worldName.length() > 20) {
                     worldName = worldName.substring(0, 17) + "...";
                 }
-                String worldTime = "World: " + OverlayState.formatPlayTime(OverlayState.getWorldPlayTime());
+                String worldTime;
                 if (!worldName.isEmpty()) {
-                    worldTime += " (" + worldName + ")";
+                    worldTime = net.minecraft.client.resources.language.I18n.get("overlay.display.world_with_name", OverlayState.formatPlayTime(OverlayState.getWorldPlayTime()), worldName);
+                } else {
+                    worldTime = net.minecraft.client.resources.language.I18n.get("overlay.display.world", OverlayState.formatPlayTime(OverlayState.getWorldPlayTime()));
                 }
                 guiGraphics.drawString(this.font, worldTime, leftX, leftY, 0x00FF00); // Green color
                 leftY += lineHeight;
@@ -158,9 +164,11 @@ public class OverlayScreen extends Screen {
 
             if (OverlayState.getDimensionPlayTime() > 0) {
                 String dimensionName = OverlayState.getCurrentDimensionName();
-                String dimTime = "Dimension: " + OverlayState.formatPlayTime(OverlayState.getDimensionPlayTime());
+                String dimTime;
                 if (!dimensionName.isEmpty()) {
-                    dimTime += " (" + dimensionName + ")";
+                    dimTime = net.minecraft.client.resources.language.I18n.get("overlay.display.dimension_time_with_name", OverlayState.formatPlayTime(OverlayState.getDimensionPlayTime()), dimensionName);
+                } else {
+                    dimTime = net.minecraft.client.resources.language.I18n.get("overlay.display.dimension_time", OverlayState.formatPlayTime(OverlayState.getDimensionPlayTime()));
                 }
                 guiGraphics.drawString(this.font, dimTime, leftX, leftY, 0x00FFFF); // Cyan color
                 leftY += lineHeight;
@@ -174,7 +182,7 @@ public class OverlayScreen extends Screen {
             // Show coordinates (if enabled)
             if (Config.showCoordinates) {
                 BlockPos pos = this.minecraft.player.blockPosition();
-                String coords = String.format("X: %d, Y: %d, Z: %d", pos.getX(), pos.getY(), pos.getZ());
+                String coords = net.minecraft.client.resources.language.I18n.get("overlay.display.coordinates", pos.getX(), pos.getY(), pos.getZ());
                 int coordsWidth = this.font.width(coords);
                 guiGraphics.drawString(this.font, coords, this.width - coordsWidth - padding, rightY, textColor);
                 rightY += lineHeight;
@@ -182,7 +190,7 @@ public class OverlayScreen extends Screen {
 
             // Show dimension (if enabled)
             if (Config.showDimension) {
-                String dimension = "Dimension: " + this.minecraft.player.level().dimension().location().getPath();
+                String dimension = net.minecraft.client.resources.language.I18n.get("overlay.display.dimension_name", this.minecraft.player.level().dimension().location().getPath());
                 int dimWidth = this.font.width(dimension);
                 guiGraphics.drawString(this.font, dimension, this.width - dimWidth - padding, rightY, textColor);
             }
@@ -194,14 +202,14 @@ public class OverlayScreen extends Screen {
 
             // Show health (if enabled)
             if (Config.showHealth) {
-                String health = String.format("Health: %.1f / %.1f", this.minecraft.player.getHealth(), this.minecraft.player.getMaxHealth());
+                String health = net.minecraft.client.resources.language.I18n.get("overlay.display.health", this.minecraft.player.getHealth(), this.minecraft.player.getMaxHealth());
                 int healthWidth = this.font.width(health);
                 int healthX = (this.width - healthWidth) / 2;
                 guiGraphics.drawString(this.font, health, healthX, centerY, textColor);
                 centerY += lineHeight;
             }
 
-            String instruction = "Press Shift+Tab to close";
+            String instruction = net.minecraft.client.resources.language.I18n.get("overlay.display.close_instruction");
             int instructWidth = this.font.width(instruction);
             int instructX = (this.width - instructWidth) / 2;
             guiGraphics.drawString(this.font, instruction, instructX, centerY, 0xAAAAAA);
