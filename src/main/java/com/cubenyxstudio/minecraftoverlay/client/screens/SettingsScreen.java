@@ -21,10 +21,10 @@ public class SettingsScreen extends Screen {
     @Override
     protected void init() {
         int centerX = this.width / 2;
-        int columnWidth = 200;
-        int columnSpacing = 20;
+        int columnWidth = 210; // Augmenté de 200 à 210
+        int columnSpacing = 30; // Augmenté de 20 à 30 pour plus d'espace entre les colonnes
         int startY = 80;
-        int spacing = 26;
+        int spacing = 28; // Augmenté de 26 à 28 pour plus d'espace vertical
         int buttonHeight = 20;
 
         // === LEFT COLUMN: DISPLAY OPTIONS ===
@@ -86,8 +86,8 @@ public class SettingsScreen extends Screen {
 
         // === BOTTOM BUTTONS ===
         int bottomButtonWidth = 120;
-        int bottomButtonSpacing = 10;
-        int bottomY = this.height - 35;
+        int bottomButtonSpacing = 20; // Augmenté de 10 à 20
+        int bottomY = this.height - 45; // Augmenté de 35 à 45 pour plus d'espace du bas
 
         // Save button
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.save"), button -> saveSettings())

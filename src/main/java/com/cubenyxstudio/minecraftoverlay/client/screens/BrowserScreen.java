@@ -27,8 +27,10 @@ public class BrowserScreen extends Screen {
 
     @Override
     protected void init() {
-        // URL input box
-        this.urlBox = new EditBox(this.font, 10, 40, this.width - 130, 20, Component.translatable("overlay.browser.enter_url"));
+        int padding = 20; // Marge depuis les bords
+
+        // URL input box avec marges
+        this.urlBox = new EditBox(this.font, padding, 40, this.width - 140, 20, Component.translatable("overlay.browser.enter_url"));
         this.urlBox.setMaxLength(256);
         this.urlBox.setValue(currentUrl);
         this.addRenderableWidget(this.urlBox);
@@ -45,22 +47,26 @@ public class BrowserScreen extends Screen {
                 .build();
         this.addRenderableWidget(this.homeButton);
 
-        // Quick links
+        // Quick links avec meilleur espacement
+        int quickLinkSpacing = 10; // Espacement entre les boutons
+        int quickLinkWidth = 110; // Largeur de chaque bouton
+        int quickLinkY = 75; // Position Y
+
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.browser.minecraft"), button -> quickLoad("https://www.minecraft.net"))
-                .bounds(10, 70, 100, 20)
+                .bounds(padding, quickLinkY, quickLinkWidth, 20)
                 .build());
 
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.browser.curseforge"), button -> quickLoad("https://www.curseforge.com"))
-                .bounds(115, 70, 100, 20)
+                .bounds(padding + quickLinkWidth + quickLinkSpacing, quickLinkY, quickLinkWidth, 20)
                 .build());
 
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.browser.modrinth"), button -> quickLoad("https://modrinth.com"))
-                .bounds(220, 70, 100, 20)
+                .bounds(padding + (quickLinkWidth + quickLinkSpacing) * 2, quickLinkY, quickLinkWidth, 20)
                 .build());
 
-        // Back button
+        // Back button centré en bas
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.close"), button -> this.onClose())
-                .bounds(this.width / 2 - 75, this.height - 30, 150, 20)
+                .bounds(this.width / 2 - 75, this.height - 40, 150, 20)
                 .build());
     }
 
