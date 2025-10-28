@@ -21,71 +21,54 @@ public class PinOptionsScreen extends Screen {
     @Override
     protected void init() {
         int centerX = this.width / 2;
-        int buttonWidth = 240;
-        int buttonHeight = 20;
-        int verticalSpacing = 30; // Espacement généreux entre les options
-        int startY = 70;
+        int buttonWidth = 200;
 
-        // === PIN OPTIONS - Liste verticale centrée ===
-
-        // Pin FPS
+        // LISTE VERTICALE - POSITIONS FIXES
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinFPS)
                 .withInitialValue(Config.pinFPS)
-                .create(centerX - buttonWidth / 2, startY, buttonWidth, buttonHeight,
+                .create(centerX - buttonWidth / 2, 60, buttonWidth, 20,
                         Component.translatable("overlay.pin.fps"),
                         (button, value) -> Config.pinFPS = value));
 
-        // Pin Coordinates
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinCoordinates)
                 .withInitialValue(Config.pinCoordinates)
-                .create(centerX - buttonWidth / 2, startY + verticalSpacing, buttonWidth, buttonHeight,
+                .create(centerX - buttonWidth / 2, 85, buttonWidth, 20,
                         Component.translatable("overlay.pin.coordinates"),
                         (button, value) -> Config.pinCoordinates = value));
 
-        // Pin Real Time
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinRealTime)
                 .withInitialValue(Config.pinRealTime)
-                .create(centerX - buttonWidth / 2, startY + verticalSpacing * 2, buttonWidth, buttonHeight,
+                .create(centerX - buttonWidth / 2, 110, buttonWidth, 20,
                         Component.translatable("overlay.pin.real_time"),
                         (button, value) -> Config.pinRealTime = value));
 
-        // Pin Play Time
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinPlayTime)
                 .withInitialValue(Config.pinPlayTime)
-                .create(centerX - buttonWidth / 2, startY + verticalSpacing * 3, buttonWidth, buttonHeight,
+                .create(centerX - buttonWidth / 2, 135, buttonWidth, 20,
                         Component.translatable("overlay.pin.play_time"),
                         (button, value) -> Config.pinPlayTime = value));
 
-        // Pin Health
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinHealth)
                 .withInitialValue(Config.pinHealth)
-                .create(centerX - buttonWidth / 2, startY + verticalSpacing * 4, buttonWidth, buttonHeight,
+                .create(centerX - buttonWidth / 2, 160, buttonWidth, 20,
                         Component.translatable("overlay.pin.health"),
                         (button, value) -> Config.pinHealth = value));
 
-        // Pin Dimension
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinDimension)
                 .withInitialValue(Config.pinDimension)
-                .create(centerX - buttonWidth / 2, startY + verticalSpacing * 5, buttonWidth, buttonHeight,
+                .create(centerX - buttonWidth / 2, 185, buttonWidth, 20,
                         Component.translatable("overlay.pin.dimension"),
                         (button, value) -> Config.pinDimension = value));
 
-        // === BOTTOM BUTTONS - Deux boutons côte à côte ===
-        int bottomButtonWidth = 100;
-        int bottomButtonGap = 20;
-        int totalBottomWidth = (bottomButtonWidth * 2) + bottomButtonGap;
-        int leftBottomX = centerX - totalBottomWidth / 2;
-        int rightBottomX = leftBottomX + bottomButtonWidth + bottomButtonGap;
-        int bottomY = this.height - 50;
-
-        // Save button
+        // BOUTONS DU BAS
+        int spacing = 10;
+        int btnWidth = 90;
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.save"), button -> saveSettings())
-                .bounds(leftBottomX, bottomY, bottomButtonWidth, 20)
+                .bounds(centerX - btnWidth - spacing/2, this.height - 40, btnWidth, 20)
                 .build());
 
-        // Back button
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.back"), button -> this.onClose())
-                .bounds(rightBottomX, bottomY, bottomButtonWidth, 20)
+                .bounds(centerX + spacing/2, this.height - 40, btnWidth, 20)
                 .build());
     }
 

@@ -21,88 +21,66 @@ public class SettingsScreen extends Screen {
     @Override
     protected void init() {
         int centerX = this.width / 2;
-        int columnWidth = 220;
-        int columnGap = 40; // Espace généreux entre les deux colonnes
-        int verticalSpacing = 30;
-        int startY = 80;
-        int buttonHeight = 20;
+        int columnWidth = 190;
+        int gap = 20;
 
-        // Calcul des positions des colonnes
-        int totalWidth = (columnWidth * 2) + columnGap;
-        int leftColumnX = centerX - totalWidth / 2;
-        int rightColumnX = leftColumnX + columnWidth + columnGap;
+        // COLONNE GAUCHE
+        int leftX = centerX - columnWidth - gap/2;
 
-        // === COLONNE GAUCHE: DISPLAY OPTIONS ===
-
-        // Overlay enabled toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.overlayEnabled)
                 .withInitialValue(Config.overlayEnabled)
-                .create(leftColumnX, startY, columnWidth, buttonHeight,
+                .create(leftX, 60, columnWidth, 20,
                         Component.translatable("overlay.settings.enabled"),
                         (button, value) -> Config.overlayEnabled = value));
 
-        // Show FPS toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.showFPS)
                 .withInitialValue(Config.showFPS)
-                .create(leftColumnX, startY + verticalSpacing, columnWidth, buttonHeight,
+                .create(leftX, 85, columnWidth, 20,
                         Component.translatable("overlay.settings.show_fps"),
                         (button, value) -> Config.showFPS = value));
 
-        // Show coordinates toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.showCoordinates)
                 .withInitialValue(Config.showCoordinates)
-                .create(leftColumnX, startY + verticalSpacing * 2, columnWidth, buttonHeight,
+                .create(leftX, 110, columnWidth, 20,
                         Component.translatable("overlay.settings.show_coordinates"),
                         (button, value) -> Config.showCoordinates = value));
 
-        // Show real time toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.showRealTime)
                 .withInitialValue(Config.showRealTime)
-                .create(leftColumnX, startY + verticalSpacing * 3, columnWidth, buttonHeight,
+                .create(leftX, 135, columnWidth, 20,
                         Component.translatable("overlay.settings.show_real_time"),
                         (button, value) -> Config.showRealTime = value));
 
+        // COLONNE DROITE
+        int rightX = centerX + gap/2;
 
-        // === COLONNE DROITE: TIME TRACKING ===
-
-        // Show play time toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.showPlayTime)
                 .withInitialValue(Config.showPlayTime)
-                .create(rightColumnX, startY, columnWidth, buttonHeight,
+                .create(rightX, 60, columnWidth, 20,
                         Component.translatable("overlay.settings.show_play_time"),
                         (button, value) -> Config.showPlayTime = value));
 
-        // Show health toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.showHealth)
                 .withInitialValue(Config.showHealth)
-                .create(rightColumnX, startY + verticalSpacing, columnWidth, buttonHeight,
+                .create(rightX, 85, columnWidth, 20,
                         Component.translatable("overlay.settings.show_health"),
                         (button, value) -> Config.showHealth = value));
 
-        // Show dimension toggle
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.showDimension)
                 .withInitialValue(Config.showDimension)
-                .create(rightColumnX, startY + verticalSpacing * 2, columnWidth, buttonHeight,
+                .create(rightX, 110, columnWidth, 20,
                         Component.translatable("overlay.settings.show_dimension"),
                         (button, value) -> Config.showDimension = value));
 
-
-        // === BOTTOM BUTTONS ===
-        int bottomButtonWidth = 100;
-        int bottomButtonGap = 20;
-        int totalBottomWidth = (bottomButtonWidth * 2) + bottomButtonGap;
-        int leftBottomX = centerX - totalBottomWidth / 2;
-        int rightBottomX = leftBottomX + bottomButtonWidth + bottomButtonGap;
-        int bottomY = this.height - 50;
-
-        // Save button
+        // BOUTONS DU BAS
+        int spacing = 10;
+        int btnWidth = 90;
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.save"), button -> saveSettings())
-                .bounds(leftBottomX, bottomY, bottomButtonWidth, 20)
+                .bounds(centerX - btnWidth - spacing/2, this.height - 40, btnWidth, 20)
                 .build());
 
-        // Back button (cancel without saving)
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.cancel"), button -> this.onClose())
-                .bounds(rightBottomX, bottomY, bottomButtonWidth, 20)
+                .bounds(centerX + spacing/2, this.height - 40, btnWidth, 20)
                 .build());
     }
 

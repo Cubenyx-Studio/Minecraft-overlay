@@ -24,47 +24,38 @@ public class StopwatchScreen extends Screen {
     @Override
     protected void init() {
         int centerX = this.width / 2;
-        int centerY = this.height / 2;
 
-        // Configuration de l'espacement pour éviter les chevauchements
-        int buttonWidth = 90;
-        int buttonHeight = 20;
-        int horizontalGap = 20; // Espace entre les colonnes
-        int verticalGap = 35;   // Espace entre les lignes
+        // POSITIONS SIMPLES ET TESTÉES
+        int buttonWidth = 80;
+        int spacing = 10;
 
-        // Calcul des positions pour centrer le groupe de boutons
-        int totalWidth = (buttonWidth * 2) + horizontalGap;
-        int leftButtonX = centerX - totalWidth / 2;
-        int rightButtonX = leftButtonX + buttonWidth + horizontalGap;
-
-        int firstRowY = centerY + 50;
-        int secondRowY = firstRowY + verticalGap;
-
-        // Première ligne de boutons
+        // Ligne 1 à Y=140
+        int row1Y = 140;
         this.startButton = Button.builder(Component.translatable("overlay.button.start"), button -> OverlayState.startStopwatch())
-                .bounds(leftButtonX, firstRowY, buttonWidth, buttonHeight)
+                .bounds(centerX - buttonWidth - spacing/2, row1Y, buttonWidth, 20)
                 .build();
         this.addRenderableWidget(this.startButton);
 
         this.stopButton = Button.builder(Component.translatable("overlay.button.stop"), button -> OverlayState.stopStopwatch())
-                .bounds(rightButtonX, firstRowY, buttonWidth, buttonHeight)
+                .bounds(centerX + spacing/2, row1Y, buttonWidth, 20)
                 .build();
         this.addRenderableWidget(this.stopButton);
 
-        // Deuxième ligne de boutons
+        // Ligne 2 à Y=170 (30px plus bas)
+        int row2Y = 170;
         this.resetButton = Button.builder(Component.translatable("overlay.button.reset"), button -> OverlayState.resetStopwatch())
-                .bounds(leftButtonX, secondRowY, buttonWidth, buttonHeight)
+                .bounds(centerX - buttonWidth - spacing/2, row2Y, buttonWidth, 20)
                 .build();
         this.addRenderableWidget(this.resetButton);
 
         this.lapButton = Button.builder(Component.translatable("overlay.button.lap"), button -> OverlayState.recordLap())
-                .bounds(rightButtonX, secondRowY, buttonWidth, buttonHeight)
+                .bounds(centerX + spacing/2, row2Y, buttonWidth, 20)
                 .build();
         this.addRenderableWidget(this.lapButton);
 
-        // Back button centré en bas
+        // Back button
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.back"), button -> this.onClose())
-                .bounds(centerX - 60, this.height - 50, 120, 20)
+                .bounds(centerX - 50, this.height - 40, 100, 20)
                 .build());
 
         updateButtonStates();

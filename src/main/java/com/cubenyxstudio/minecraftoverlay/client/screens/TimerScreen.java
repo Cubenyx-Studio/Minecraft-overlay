@@ -27,62 +27,47 @@ public class TimerScreen extends Screen {
     @Override
     protected void init() {
         int centerX = this.width / 2;
-        int centerY = this.height / 2;
 
-        // Champs de saisie pour heures, minutes, secondes
-        int inputWidth = 60;
-        int inputSpacing = 10;
-        int totalInputWidth = (inputWidth * 3) + (inputSpacing * 2);
-        int inputStartX = centerX - totalInputWidth / 2;
-
-        this.hoursBox = new EditBox(this.font, inputStartX, centerY - 50, inputWidth, 20, Component.translatable("overlay.timer.hours"));
+        // CHAMPS DE SAISIE - POSITION FIXE Y=80
+        this.hoursBox = new EditBox(this.font, centerX - 95, 80, 60, 20, Component.translatable("overlay.timer.hours"));
         this.hoursBox.setMaxLength(2);
         this.hoursBox.setValue("0");
         this.addRenderableWidget(this.hoursBox);
 
-        this.minutesBox = new EditBox(this.font, inputStartX + inputWidth + inputSpacing, centerY - 50, inputWidth, 20, Component.translatable("overlay.timer.minutes"));
+        this.minutesBox = new EditBox(this.font, centerX - 30, 80, 60, 20, Component.translatable("overlay.timer.minutes"));
         this.minutesBox.setMaxLength(2);
         this.minutesBox.setValue("1");
         this.addRenderableWidget(this.minutesBox);
 
-        this.secondsBox = new EditBox(this.font, inputStartX + (inputWidth + inputSpacing) * 2, centerY - 50, inputWidth, 20, Component.translatable("overlay.timer.seconds"));
+        this.secondsBox = new EditBox(this.font, centerX + 35, 80, 60, 20, Component.translatable("overlay.timer.seconds"));
         this.secondsBox.setMaxLength(2);
         this.secondsBox.setValue("0");
         this.addRenderableWidget(this.secondsBox);
 
-        // Boutons avec espacement correct
-        int buttonWidth = 90;
-        int buttonHeight = 20;
-        int horizontalGap = 20;
-        int verticalGap = 35;
+        // BOUTONS - POSITIONS FIXES
+        int buttonWidth = 80;
+        int spacing = 10;
 
-        int totalButtonWidth = (buttonWidth * 2) + horizontalGap;
-        int leftButtonX = centerX - totalButtonWidth / 2;
-        int rightButtonX = leftButtonX + buttonWidth + horizontalGap;
-
-        int firstRowY = centerY + 20;
-        int secondRowY = firstRowY + verticalGap;
-
-        // Première ligne : Start et Stop
+        // Ligne 1 à Y=140
         this.startButton = Button.builder(Component.translatable("overlay.timer.start"), button -> startTimer())
-                .bounds(leftButtonX, firstRowY, buttonWidth, buttonHeight)
+                .bounds(centerX - buttonWidth - spacing/2, 140, buttonWidth, 20)
                 .build();
         this.addRenderableWidget(this.startButton);
 
         this.stopButton = Button.builder(Component.translatable("overlay.timer.stop"), button -> OverlayState.stopTimer())
-                .bounds(rightButtonX, firstRowY, buttonWidth, buttonHeight)
+                .bounds(centerX + spacing/2, 140, buttonWidth, 20)
                 .build();
         this.addRenderableWidget(this.stopButton);
 
-        // Deuxième ligne : Reset centré
+        // Reset centré à Y=170
         this.resetButton = Button.builder(Component.translatable("overlay.timer.reset"), button -> resetTimer())
-                .bounds(centerX - buttonWidth / 2, secondRowY, buttonWidth, buttonHeight)
+                .bounds(centerX - 40, 170, 80, 20)
                 .build();
         this.addRenderableWidget(this.resetButton);
 
         // Back button
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.back"), button -> this.onClose())
-                .bounds(centerX - 60, this.height - 50, 120, 20)
+                .bounds(centerX - 50, this.height - 40, 100, 20)
                 .build());
 
         updateButtonStates();
