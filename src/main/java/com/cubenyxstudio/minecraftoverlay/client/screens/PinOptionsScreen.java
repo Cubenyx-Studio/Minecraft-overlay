@@ -60,15 +60,15 @@ public class PinOptionsScreen extends Screen {
                         Component.translatable("overlay.pin.dimension"),
                         (button, value) -> Config.pinDimension = value));
 
-        // BOUTONS DU BAS
+        // BOUTONS DU BAS - descendus un peu plus bas
         int spacing = 10;
         int btnWidth = 90;
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.save"), button -> saveSettings())
-                .bounds(centerX - btnWidth - spacing/2, this.height - 40, btnWidth, 20)
+                .bounds(centerX - btnWidth - spacing/2, this.height - 30, btnWidth, 20)
                 .build());
 
         this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.back"), button -> this.onClose())
-                .bounds(centerX + spacing/2, this.height - 40, btnWidth, 20)
+                .bounds(centerX + spacing/2, this.height - 30, btnWidth, 20)
                 .build());
     }
 

@@ -106,26 +106,26 @@ public class SettingsScreen extends Screen {
 
         // Draw section headers
         int centerX = this.width / 2;
-        int columnWidth = 200;
-        int columnSpacing = 20;
+        int columnWidth = 190;  // Correspond à init()
+        int columnSpacing = 20; // Correspond à gap dans init()
         int leftX = centerX - columnWidth - columnSpacing / 2;
         int rightX = centerX + columnSpacing / 2;
 
-        // Left column header: Display Options
+        // Left column header: Display Options - remonté
         String leftHeader = net.minecraft.client.resources.language.I18n.get("overlay.settings.category.display");
         int leftHeaderX = leftX + columnWidth / 2;
-        guiGraphics.drawCenteredString(this.font, leftHeader, leftHeaderX, 55, 0xFFD700);
+        guiGraphics.drawCenteredString(this.font, leftHeader, leftHeaderX, 45, 0xFFD700);
 
-        // Left separator line
-        int lineY = 70;
+        // Left separator line - remonté aussi
+        int lineY = 57;
         guiGraphics.fill(leftX, lineY, leftX + columnWidth, lineY + 1, 0xFF404040);
 
-        // Right column header: Time Tracking
+        // Right column header: Time Tracking - remonté
         String rightHeader = net.minecraft.client.resources.language.I18n.get("overlay.settings.category.time");
         int rightHeaderX = rightX + columnWidth / 2;
-        guiGraphics.drawCenteredString(this.font, rightHeader, rightHeaderX, 55, 0x00FF00);
+        guiGraphics.drawCenteredString(this.font, rightHeader, rightHeaderX, 45, 0x00FF00);
 
-        // Right separator line
+        // Right separator line - remonté aussi
         guiGraphics.fill(rightX, lineY, rightX + columnWidth, lineY + 1, 0xFF404040);
 
         // Instructions for key binding
