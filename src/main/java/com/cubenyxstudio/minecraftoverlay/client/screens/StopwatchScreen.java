@@ -17,7 +17,7 @@ public class StopwatchScreen extends Screen {
     private Button lapButton;
 
     public StopwatchScreen(Screen previousScreen) {
-        super(Component.literal("Stopwatch"));
+        super(Component.translatable("overlay.screen.stopwatch.title"));
         this.previousScreen = previousScreen;
     }
 
@@ -27,28 +27,28 @@ public class StopwatchScreen extends Screen {
         int centerY = this.height / 2;
 
         // Buttons
-        this.startButton = Button.builder(Component.literal("Start"), button -> OverlayState.startStopwatch())
+        this.startButton = Button.builder(Component.translatable("overlay.button.start"), button -> OverlayState.startStopwatch())
                 .bounds(centerX - 105, centerY + 40, 100, 20)
                 .build();
         this.addRenderableWidget(this.startButton);
 
-        this.stopButton = Button.builder(Component.literal("Stop"), button -> OverlayState.stopStopwatch())
+        this.stopButton = Button.builder(Component.translatable("overlay.button.stop"), button -> OverlayState.stopStopwatch())
                 .bounds(centerX + 5, centerY + 40, 100, 20)
                 .build();
         this.addRenderableWidget(this.stopButton);
 
-        this.resetButton = Button.builder(Component.literal("Reset"), button -> OverlayState.resetStopwatch())
+        this.resetButton = Button.builder(Component.translatable("overlay.button.reset"), button -> OverlayState.resetStopwatch())
                 .bounds(centerX - 105, centerY + 70, 100, 20)
                 .build();
         this.addRenderableWidget(this.resetButton);
 
-        this.lapButton = Button.builder(Component.literal("Lap"), button -> OverlayState.recordLap())
+        this.lapButton = Button.builder(Component.translatable("overlay.button.lap"), button -> OverlayState.recordLap())
                 .bounds(centerX + 5, centerY + 70, 100, 20)
                 .build();
         this.addRenderableWidget(this.lapButton);
 
         // Back button
-        this.addRenderableWidget(Button.builder(Component.literal("Back"), button -> this.onClose())
+        this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.back"), button -> this.onClose())
                 .bounds(this.width / 2 - 50, this.height - 30, 100, 20)
                 .build());
 
@@ -89,11 +89,12 @@ public class StopwatchScreen extends Screen {
         // Draw lap times OVER the background
         java.util.List<Long> lapTimes = OverlayState.getStopwatchLaps();
         if (!lapTimes.isEmpty()) {
-            guiGraphics.drawString(this.font, "Lap Times:", this.width / 2 - 100, this.height / 2 + 100, 0xAAAAAA);
+            String lapTimesLabel = net.minecraft.client.resources.language.I18n.get("overlay.stopwatch.lap_times");
+            guiGraphics.drawString(this.font, lapTimesLabel, this.width / 2 - 100, this.height / 2 + 100, 0xAAAAAA);
             int yOffset = 0;
             int maxLaps = Math.min(5, lapTimes.size());
             for (int i = lapTimes.size() - 1; i >= lapTimes.size() - maxLaps; i--) {
-                String lapStr = String.format("Lap %d: %s", i + 1, formatTime(lapTimes.get(i)));
+                String lapStr = net.minecraft.client.resources.language.I18n.get("overlay.stopwatch.lap_number", i + 1, formatTime(lapTimes.get(i)));
                 guiGraphics.drawString(this.font, lapStr, this.width / 2 - 100, this.height / 2 + 115 + yOffset, 0xFFFFFF);
                 yOffset += 12;
             }

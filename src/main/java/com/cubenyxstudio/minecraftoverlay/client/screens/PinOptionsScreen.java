@@ -14,7 +14,7 @@ public class PinOptionsScreen extends Screen {
     private final Screen previousScreen;
 
     public PinOptionsScreen(Screen previousScreen) {
-        super(Component.literal("Pin Options"));
+        super(Component.translatable("overlay.screen.pin.title"));
         this.previousScreen = previousScreen;
     }
 
@@ -32,42 +32,42 @@ public class PinOptionsScreen extends Screen {
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinFPS)
                 .withInitialValue(Config.pinFPS)
                 .create(centerX - buttonWidth / 2, startY, buttonWidth, buttonHeight,
-                        Component.literal("📌 Pin FPS"),
+                        Component.translatable("overlay.pin.fps"),
                         (button, value) -> Config.pinFPS = value));
 
         // Pin Coordinates
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinCoordinates)
                 .withInitialValue(Config.pinCoordinates)
                 .create(centerX - buttonWidth / 2, startY + spacing, buttonWidth, buttonHeight,
-                        Component.literal("📌 Pin Coordinates"),
+                        Component.translatable("overlay.pin.coordinates"),
                         (button, value) -> Config.pinCoordinates = value));
 
         // Pin Real Time
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinRealTime)
                 .withInitialValue(Config.pinRealTime)
                 .create(centerX - buttonWidth / 2, startY + spacing * 2, buttonWidth, buttonHeight,
-                        Component.literal("📌 Pin Real Time"),
+                        Component.translatable("overlay.pin.real_time"),
                         (button, value) -> Config.pinRealTime = value));
 
         // Pin Play Time
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinPlayTime)
                 .withInitialValue(Config.pinPlayTime)
                 .create(centerX - buttonWidth / 2, startY + spacing * 3, buttonWidth, buttonHeight,
-                        Component.literal("📌 Pin Play Time"),
+                        Component.translatable("overlay.pin.play_time"),
                         (button, value) -> Config.pinPlayTime = value));
 
         // Pin Health
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinHealth)
                 .withInitialValue(Config.pinHealth)
                 .create(centerX - buttonWidth / 2, startY + spacing * 4, buttonWidth, buttonHeight,
-                        Component.literal("📌 Pin Health"),
+                        Component.translatable("overlay.pin.health"),
                         (button, value) -> Config.pinHealth = value));
 
         // Pin Dimension
         this.addRenderableWidget(CycleButton.onOffBuilder(Config.pinDimension)
                 .withInitialValue(Config.pinDimension)
                 .create(centerX - buttonWidth / 2, startY + spacing * 5, buttonWidth, buttonHeight,
-                        Component.literal("📌 Pin Dimension"),
+                        Component.translatable("overlay.pin.dimension"),
                         (button, value) -> Config.pinDimension = value));
 
         // === BOTTOM BUTTONS ===
@@ -76,12 +76,12 @@ public class PinOptionsScreen extends Screen {
         int bottomY = this.height - 35;
 
         // Save button
-        this.addRenderableWidget(Button.builder(Component.literal("✓ Save"), button -> saveSettings())
+        this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.save"), button -> saveSettings())
                 .bounds(centerX - bottomButtonWidth - bottomButtonSpacing / 2, bottomY, bottomButtonWidth, 20)
                 .build());
 
         // Back button
-        this.addRenderableWidget(Button.builder(Component.literal("✕ Back"), button -> this.onClose())
+        this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.back"), button -> this.onClose())
                 .bounds(centerX + bottomButtonSpacing / 2, bottomY, bottomButtonWidth, 20)
                 .build());
     }
@@ -91,7 +91,7 @@ public class PinOptionsScreen extends Screen {
         Config.save();
 
         if (this.minecraft != null && this.minecraft.player != null) {
-            this.minecraft.player.sendSystemMessage(Component.literal("§a[Pin] Pin settings saved successfully!"));
+            this.minecraft.player.sendSystemMessage(Component.translatable("overlay.pin.saved"));
         }
         this.onClose();
     }

@@ -16,55 +16,50 @@ public class BrowserScreen extends Screen {
     private Button goButton;
     private Button homeButton;
     private String currentUrl = "https://www.minecraft.net";
-    private String pageContent = "Welcome to the Overlay Browser!\n\n" +
-            "Click on a quick link or enter a URL to open it in your system browser.\n\n" +
-            "Note: Full in-game web rendering would require JCEF (Java Chromium Embedded Framework),\n" +
-            "which is a large dependency. For now, links open in your default browser.\n\n" +
-            "Quick Links:\n" +
-            "• Minecraft.net - Official Minecraft website\n" +
-            "• CurseForge - Minecraft mods and modpacks\n" +
-            "• Modrinth - Modern mod hosting platform";
+    private String pageContent = "";
 
     public BrowserScreen(Screen previousScreen) {
-        super(Component.literal("Browser"));
+        super(Component.translatable("overlay.screen.browser.title"));
         this.previousScreen = previousScreen;
+        // Initialize with welcome message
+        this.pageContent = net.minecraft.client.resources.language.I18n.get("overlay.browser.welcome");
     }
 
     @Override
     protected void init() {
         // URL input box
-        this.urlBox = new EditBox(this.font, 10, 40, this.width - 130, 20, Component.literal("URL"));
+        this.urlBox = new EditBox(this.font, 10, 40, this.width - 130, 20, Component.translatable("overlay.browser.enter_url"));
         this.urlBox.setMaxLength(256);
         this.urlBox.setValue(currentUrl);
         this.addRenderableWidget(this.urlBox);
 
         // Go button
-        this.goButton = Button.builder(Component.literal("Go"), button -> loadUrl())
+        this.goButton = Button.builder(Component.translatable("overlay.browser.go"), button -> loadUrl())
                 .bounds(this.width - 115, 40, 50, 20)
                 .build();
         this.addRenderableWidget(this.goButton);
 
         // Home button
-        this.homeButton = Button.builder(Component.literal("Home"), button -> goHome())
+        this.homeButton = Button.builder(Component.translatable("overlay.browser.home"), button -> goHome())
                 .bounds(this.width - 60, 40, 50, 20)
                 .build();
         this.addRenderableWidget(this.homeButton);
 
         // Quick links
-        this.addRenderableWidget(Button.builder(Component.literal("Minecraft.net"), button -> quickLoad("https://www.minecraft.net"))
+        this.addRenderableWidget(Button.builder(Component.translatable("overlay.browser.minecraft"), button -> quickLoad("https://www.minecraft.net"))
                 .bounds(10, 70, 100, 20)
                 .build());
 
-        this.addRenderableWidget(Button.builder(Component.literal("CurseForge"), button -> quickLoad("https://www.curseforge.com"))
+        this.addRenderableWidget(Button.builder(Component.translatable("overlay.browser.curseforge"), button -> quickLoad("https://www.curseforge.com"))
                 .bounds(115, 70, 100, 20)
                 .build());
 
-        this.addRenderableWidget(Button.builder(Component.literal("Modrinth"), button -> quickLoad("https://modrinth.com"))
+        this.addRenderableWidget(Button.builder(Component.translatable("overlay.browser.modrinth"), button -> quickLoad("https://modrinth.com"))
                 .bounds(220, 70, 100, 20)
                 .build());
 
         // Back button
-        this.addRenderableWidget(Button.builder(Component.literal("Close Browser"), button -> this.onClose())
+        this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.close"), button -> this.onClose())
                 .bounds(this.width / 2 - 75, this.height - 30, 150, 20)
                 .build());
     }
@@ -95,19 +90,14 @@ public class BrowserScreen extends Screen {
         try {
             net.minecraft.Util.getPlatform().openUri(new java.net.URI(url));
             if (this.minecraft != null && this.minecraft.player != null) {
-                this.minecraft.player.sendSystemMessage(Component.literal("§a[Browser] Opening in system browser: " + url));
+                this.minecraft.player.sendSystemMessage(Component.translatable("overlay.browser.opening", url));
             }
-            pageContent = "Opened in your system browser:\n\n" + url + "\n\n" +
-                    "The link has been opened in your default web browser.\n" +
-                    "You can continue playing while browsing.\n\n" +
-                    "Alt+Tab to switch between Minecraft and your browser.";
+            pageContent = net.minecraft.client.resources.language.I18n.get("overlay.browser.opened", url);
         } catch (Exception e) {
             if (this.minecraft != null && this.minecraft.player != null) {
-                this.minecraft.player.sendSystemMessage(Component.literal("§c[Browser] Failed to open URL: " + e.getMessage()));
+                this.minecraft.player.sendSystemMessage(Component.translatable("overlay.browser.error", e.getMessage()));
             }
-            pageContent = "Error: Failed to open URL\n\n" + url + "\n\n" +
-                    "Please check that the URL is valid and your system\n" +
-                    "has a default browser configured.";
+            pageContent = net.minecraft.client.resources.language.I18n.get("overlay.browser.error_message", url);
         }
     }
 

@@ -38,11 +38,11 @@ public class OverlayRenderer {
         STOPWATCH("overlay.button.stopwatch", "⏲"),
         SETTINGS("overlay.button.settings", "⚙");
 
-        final String label;
+        final String translationKey;
         final String icon;
 
-        ButtonType(String label, String icon) {
-            this.label = label;
+        ButtonType(String translationKey, String icon) {
+            this.translationKey = translationKey;
             this.icon = icon;
         }
     }
@@ -79,8 +79,9 @@ public class OverlayRenderer {
             guiGraphics.fill(x, y, x + 1, y + height, borderColor); // Left
             guiGraphics.fill(x + width - 1, y, x + width, y + height, borderColor); // Right
 
-            // Button text
-            String text = type.icon + " " + type.label;
+            // Button text with translation
+            String translatedLabel = net.minecraft.client.resources.language.I18n.get(type.translationKey);
+            String text = type.icon + " " + translatedLabel;
             int textWidth = minecraft.font.width(text);
             int textX = x + (width - textWidth) / 2;
             int textY = y + (height - 8) / 2;
@@ -161,12 +162,12 @@ public class OverlayRenderer {
         int leftY = padding;
 
         // Time
-        String currentTime = "Time: " + LocalTime.now().format(TIME_FORMATTER);
+        String currentTime = net.minecraft.client.resources.language.I18n.get("overlay.display.time", LocalTime.now().format(TIME_FORMATTER));
         guiGraphics.drawString(minecraft.font, currentTime, leftX, leftY, textColor);
         leftY += lineHeight;
 
         // FPS
-        String fps = "FPS: " + minecraft.getFps();
+        String fps = net.minecraft.client.resources.language.I18n.get("overlay.display.fps", minecraft.getFps());
         guiGraphics.drawString(minecraft.font, fps, leftX, leftY, textColor);
 
         // ===== TOP RIGHT CORNER =====
@@ -175,13 +176,13 @@ public class OverlayRenderer {
 
             // Position
             BlockPos pos = minecraft.player.blockPosition();
-            String coords = String.format("X: %d, Y: %d, Z: %d", pos.getX(), pos.getY(), pos.getZ());
+            String coords = net.minecraft.client.resources.language.I18n.get("overlay.display.coordinates", pos.getX(), pos.getY(), pos.getZ());
             int coordsWidth = minecraft.font.width(coords);
             guiGraphics.drawString(minecraft.font, coords, screenWidth - coordsWidth - padding, rightY, textColor);
             rightY += lineHeight;
 
             // Dimension
-            String dimension = "Dimension: " + minecraft.player.level().dimension().location().getPath();
+            String dimension = net.minecraft.client.resources.language.I18n.get("overlay.display.dimension", minecraft.player.level().dimension().location().getPath());
             int dimWidth = minecraft.font.width(dimension);
             guiGraphics.drawString(minecraft.font, dimension, screenWidth - dimWidth - padding, rightY, textColor);
         }
@@ -191,14 +192,14 @@ public class OverlayRenderer {
             int centerY = padding;
 
             // Health
-            String health = String.format("Health: %.1f / %.1f", minecraft.player.getHealth(), minecraft.player.getMaxHealth());
+            String health = net.minecraft.client.resources.language.I18n.get("overlay.display.health", minecraft.player.getHealth(), minecraft.player.getMaxHealth());
             int healthWidth = minecraft.font.width(health);
             int healthX = (screenWidth - healthWidth) / 2;
             guiGraphics.drawString(minecraft.font, health, healthX, centerY, textColor);
             centerY += lineHeight;
 
             // Instructions
-            String instruction = "Press Shift+Tab to close";
+            String instruction = net.minecraft.client.resources.language.I18n.get("overlay.instruction.close");
             int instructWidth = minecraft.font.width(instruction);
             int instructX = (screenWidth - instructWidth) / 2;
             guiGraphics.drawString(minecraft.font, instruction, instructX, centerY, 0xAAAAAA);

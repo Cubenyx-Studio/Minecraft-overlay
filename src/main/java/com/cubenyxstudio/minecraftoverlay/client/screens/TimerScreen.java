@@ -20,7 +20,7 @@ public class TimerScreen extends Screen {
     private Button resetButton;
 
     public TimerScreen(Screen previousScreen) {
-        super(Component.literal("Timer"));
+        super(Component.translatable("overlay.screen.timer.title"));
         this.previousScreen = previousScreen;
     }
 
@@ -30,39 +30,39 @@ public class TimerScreen extends Screen {
         int centerY = this.height / 2;
 
         // Input boxes for hours, minutes, seconds
-        this.hoursBox = new EditBox(this.font, centerX - 120, centerY - 40, 60, 20, Component.literal("Hours"));
+        this.hoursBox = new EditBox(this.font, centerX - 120, centerY - 40, 60, 20, Component.translatable("overlay.timer.hours"));
         this.hoursBox.setMaxLength(2);
         this.hoursBox.setValue("0");
         this.addRenderableWidget(this.hoursBox);
 
-        this.minutesBox = new EditBox(this.font, centerX - 30, centerY - 40, 60, 20, Component.literal("Minutes"));
+        this.minutesBox = new EditBox(this.font, centerX - 30, centerY - 40, 60, 20, Component.translatable("overlay.timer.minutes"));
         this.minutesBox.setMaxLength(2);
         this.minutesBox.setValue("1");
         this.addRenderableWidget(this.minutesBox);
 
-        this.secondsBox = new EditBox(this.font, centerX + 60, centerY - 40, 60, 20, Component.literal("Seconds"));
+        this.secondsBox = new EditBox(this.font, centerX + 60, centerY - 40, 60, 20, Component.translatable("overlay.timer.seconds"));
         this.secondsBox.setMaxLength(2);
         this.secondsBox.setValue("0");
         this.addRenderableWidget(this.secondsBox);
 
         // Buttons
-        this.startButton = Button.builder(Component.literal("Start"), button -> startTimer())
+        this.startButton = Button.builder(Component.translatable("overlay.timer.start"), button -> startTimer())
                 .bounds(centerX - 105, centerY + 20, 100, 20)
                 .build();
         this.addRenderableWidget(this.startButton);
 
-        this.stopButton = Button.builder(Component.literal("Stop"), button -> OverlayState.stopTimer())
+        this.stopButton = Button.builder(Component.translatable("overlay.timer.stop"), button -> OverlayState.stopTimer())
                 .bounds(centerX + 5, centerY + 20, 100, 20)
                 .build();
         this.addRenderableWidget(this.stopButton);
 
-        this.resetButton = Button.builder(Component.literal("Reset"), button -> resetTimer())
+        this.resetButton = Button.builder(Component.translatable("overlay.timer.reset"), button -> resetTimer())
                 .bounds(centerX - 50, centerY + 50, 100, 20)
                 .build();
         this.addRenderableWidget(this.resetButton);
 
         // Back button
-        this.addRenderableWidget(Button.builder(Component.literal("Back"), button -> this.onClose())
+        this.addRenderableWidget(Button.builder(Component.translatable("overlay.button.back"), button -> this.onClose())
                 .bounds(this.width / 2 - 50, this.height - 30, 100, 20)
                 .build());
 
@@ -114,7 +114,7 @@ public class TimerScreen extends Screen {
         if (remaining == 0 && !wasRunning && this.stopButton.active) {
             // Timer just finished
             if (this.minecraft != null && this.minecraft.player != null) {
-                this.minecraft.player.sendSystemMessage(Component.literal("§a[Timer] Timer finished!"));
+                this.minecraft.player.sendSystemMessage(Component.translatable("overlay.timer.finished"));
             }
         }
 
@@ -132,16 +132,20 @@ public class TimerScreen extends Screen {
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
 
         // Draw labels OVER the background
-        guiGraphics.drawString(this.font, "Hours", this.width / 2 - 120, this.height / 2 - 55, 0xFFFFFF);
-        guiGraphics.drawString(this.font, "Minutes", this.width / 2 - 30, this.height / 2 - 55, 0xFFFFFF);
-        guiGraphics.drawString(this.font, "Seconds", this.width / 2 + 60, this.height / 2 - 55, 0xFFFFFF);
+        String hoursLabel = net.minecraft.client.resources.language.I18n.get("overlay.timer.hours");
+        String minutesLabel = net.minecraft.client.resources.language.I18n.get("overlay.timer.minutes");
+        String secondsLabel = net.minecraft.client.resources.language.I18n.get("overlay.timer.seconds");
+
+        guiGraphics.drawString(this.font, hoursLabel, this.width / 2 - 120, this.height / 2 - 55, 0xFFFFFF);
+        guiGraphics.drawString(this.font, minutesLabel, this.width / 2 - 30, this.height / 2 - 55, 0xFFFFFF);
+        guiGraphics.drawString(this.font, secondsLabel, this.width / 2 + 60, this.height / 2 - 55, 0xFFFFFF);
 
         // Draw remaining time from persistent state OVER the background
         int remainingSeconds = OverlayState.getTimerRemainingSeconds();
         int hours = remainingSeconds / 3600;
         int minutes = (remainingSeconds % 3600) / 60;
         int seconds = remainingSeconds % 60;
-        String timeStr = String.format("Remaining: %02d:%02d:%02d", hours, minutes, seconds);
+        String timeStr = net.minecraft.client.resources.language.I18n.get("overlay.timer.remaining", hours, minutes, seconds);
         boolean running = OverlayState.isTimerRunning();
         guiGraphics.drawCenteredString(this.font, timeStr, this.width / 2, this.height / 2 - 10, running ? 0x00FF00 : 0xFFFFFF);
     }

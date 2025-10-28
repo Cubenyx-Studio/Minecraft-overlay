@@ -78,7 +78,7 @@ public class OverlayScreen extends Screen {
     }
 
     public OverlayScreen() {
-        super(Component.literal("Overlay"));
+        super(Component.translatable("overlay.screen.overlay.title"));
         initButtons();
     }
 
