@@ -136,7 +136,14 @@ Pinned elements appear with a **golden star** ⭐ and remain visible in-game!
 
 ---
 
-## 📥 Installation
+## 📚 Version Information & Compatibility Details
+
+For detailed version information, server compatibility, and technical specifications:
+
+- **📋 [Detailed Version Info (English)](VERSION_INFO.md)** - Complete version compatibility matrix
+- **📋 [Informations de Version (Français)](VERSION_INFO_FR.md)** - Matrice de compatibilité complète
+
+---
 
 ### For Players
 

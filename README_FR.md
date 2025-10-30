@@ -136,6 +136,15 @@ Les éléments épinglés apparaissent avec une **étoile dorée** ⭐ et resten
 
 ---
 
+## 📚 Informations de Version & Détails de Compatibilité
+
+Pour des informations détaillées sur les versions, la compatibilité serveur et les spécifications techniques :
+
+- **📋 [Informations de Version Détaillées (Français)](VERSION_INFO_FR.md)** - Matrice de compatibilité complète
+- **📋 [Detailed Version Info (English)](VERSION_INFO.md)** - Complete version compatibility matrix
+
+---
+
 ## 📥 Installation
 
 ### Pour les Joueurs
