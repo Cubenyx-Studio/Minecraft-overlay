@@ -1,166 +1,128 @@
-# 📋 Mod Information - Versions & Compatibility
+# 📋 Version Information & Compatibility
+
+> **Quick Navigation:** [📖 Version FR](VERSION_INFO_FR.md) | [📖 README](README.md) | [📖 README FR](README_FR.md)
+
+---
 
 ## 🎮 Supported Versions
 
-### ✅ Minecraft
-- **Base version**: `1.21.1`
-- **Compatibility**: `1.20.1` → `1.21.x` (all 1.21 versions included)
-- **Not supported**: `< 1.20.1` and `≥ 1.22`
+### Minecraft Compatibility
 
-### ✅ NeoForge
-- **Version used**: `21.1.76`
-- **Compatibility**: `21.1.76+` (higher versions supported)
+![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20.1%20→%201.21.x-brightgreen?style=flat-square&logo=minecraft)
+![Supported Versions](https://img.shields.io/badge/1.20.1%2B-blue?style=flat-square)
+![Supported Versions](https://img.shields.io/badge/1.20.2%20--%201.20.4-blue?style=flat-square)
+![Supported Versions](https://img.shields.io/badge/1.21-green?style=flat-square)
+![Supported Versions](https://img.shields.io/badge/1.21.1-brightgreen?style=flat-square)
 
-### ✅ Java
-- **Required**: Java 21 or higher
-- **Tested with**: Java 22
-
----
-
-## 🎯 Mod Features
-
-### 📊 Steam-like Overlay
-Press **Shift+Tab** to open the overlay that displays:
-- ⏰ **Current time** (top left)
-- 🎮 **FPS** (top left)
-- 📍 **Coordinates** X, Y, Z (top right)
-- 🌍 **Current dimension** (top right)
-- ❤️ **Player health** (top center)
-
-### 🔧 Built-in Tools
-The overlay has 4 buttons at the bottom of the screen:
-
-#### 🌐 **Browser**
-- Simplified web browsing interface
-- Quick links to Minecraft.net, CurseForge, Modrinth
-- Note: Full browser would require additional libraries
-
-#### ⏱ **Timer**
-- Configure hours, minutes, seconds
-- Start/Stop countdown
-- Notification when time is up
-- Easy reset
-
-#### ⏲ **Stopwatch**
-- Start/Stop chronometer
-- Lap recording
-- Millisecond precision
-- Display of last 5 laps
-
-#### ⚙ **Settings**
-- Enable/Disable overlay
-- Configure information display
-- Customization options
+| Version | Status | Notes |
+|---------|--------|-------|
+| `1.20.1` | ✅ Supported | Base compatibility |
+| `1.20.2` - `1.20.4` | ✅ Supported | Full compatibility |
+| `1.21` | ✅ Supported | Full compatibility |
+| `1.21.1` | ✅ Supported | Base version tested |
+| `≥ 1.22` | ❌ Not Supported | Future versions |
+| `< 1.20.1` | ❌ Not Supported | Old versions |
 
 ---
 
-## 💻 Mod Type: **CLIENT-ONLY**
+### NeoForge Requirements
 
-### ✅ What does this mean?
+![NeoForge](https://img.shields.io/badge/NeoForge-21.1.76%2B-orange?style=flat-square&logo=curseforge)
+![NeoForge Status](https://img.shields.io/badge/Mod%20Loader-NeoForge-orange?style=flat-square)
 
-The mod is **strictly client-side**:
-- ✅ **Installation**: Only in the **client** `mods/` folder
-- ❌ **Server**: **No need** to install on the server
-- ✅ **Multiplayer**: Works on any server (Vanilla, Forge, NeoForge, etc.)
-- ✅ **Singleplayer**: Works in singleplayer
-
-### 🔧 Technical Configuration
-
-**File**: `neoforge.mods.toml`
-```toml
-side = "CLIENT"  # ← Client-only mod
-```
-
-**Code**: `MinecraftOverlay.java`
-```java
-@Mod(value = MinecraftOverlay.MODID, dist = Dist.CLIENT)
-// ← Loaded only on client side
-```
+- **Required Version:** `21.1.76` or higher
+- **Tested With:** `21.1.76`
+- **Compatibility:** All newer versions supported
 
 ---
 
-## 📦 Server Compatibility
+### Java Requirements
 
-| Server Type | Compatible? | Required on Server? |
-|-------------|-------------|---------------------|
-| Vanilla | ✅ Yes | ❌ No |
-| Forge/NeoForge | ✅ Yes | ❌ No |
-| Spigot/Paper | ✅ Yes | ❌ No |
-| Fabric | ✅ Yes | ❌ No |
+![Java Version](https://img.shields.io/badge/Java-21%2B-blue?style=flat-square&logo=openjdk)
+![Java Status](https://img.shields.io/badge/Runtime-Java%2021%2B-blue?style=flat-square)
 
-**Conclusion**: The mod works on **all servers** without server installation!
+- **Required:** Java 21 or higher
+- **Tested With:** Java 22
+- **Compatibility:** Java 21, 22, 23+
 
 ---
 
-## 🎯 Where to Install the Mod?
+## 📦 Server Compatibility Matrix
 
-### ✅ Client Installation
-```
-.minecraft/
-└── mods/
-    └── Minecraft-Overlay-1.0.0.jar  ← HERE
-```
+![Compatibility](https://img.shields.io/badge/Compatible%20Servers-6%20Types-brightgreen?style=flat-square)
 
-### ❌ NOT on the Server
-```
-server/
-└── mods/
-    └── [DO NOT PUT HERE]
-```
+| Server Type | Compatible | Installation | Remarks |
+|-------------|-----------|--------------|---------|
+| **Vanilla** | ✅ Yes | ❌ Client Only | Works perfectly |
+| **Forge** | ✅ Yes | ❌ Client Only | Client-side mods only |
+| **NeoForge** | ✅ Yes | ❌ Client Only | Recommended setup |
+| **Spigot** | ✅ Yes | ❌ Client Only | Paper-compatible |
+| **Paper** | ✅ Yes | ❌ Client Only | High performance |
+| **Fabric** | ✅ Yes | ❌ Client Only | Loader agnostic |
+
+### Summary
+
+> ✨ **The mod works on ALL server types without requiring server installation!**
 
 ---
 
 ## 🚀 Compatibility Testing
 
-### Singleplayer Client (1.20.1 - 1.21.x)
+### Single-Player Testing (All Versions)
+
 ```bash
-# Launch with your chosen version
+# Launch with any supported version (1.20.1 - 1.21.x)
 cmd /c gradlew.bat runClient
 ```
 
-### Multiplayer
-1. ✅ Install the mod in `.minecraft/mods/`
-2. ✅ Connect to any server 1.20.1-1.21.x
-3. ✅ The mod works automatically
-4. ❌ The server does NOT need the mod
+### Multiplayer Testing
+
+1. ✅ Install mod in `.minecraft/mods/`
+2. ✅ Connect to server (1.20.1 - 1.21.x)
+3. ✅ Mod activates automatically
+4. ✅ Press Shift+Tab to open overlay
+5. ❌ Server doesn't need the mod
+
+### Cross-Version Compatibility
+
+| Scenario | Works | Notes |
+|----------|-------|-------|
+| Client 1.20.1 + Server 1.20.1 | ✅ Yes | Perfect match |
+| Client 1.21.1 + Server 1.20.1 | ✅ Yes | Compatible |
+| Client 1.20.1 + Server 1.21.1 | ✅ Yes | Compatible |
+| Client 1.21.1 + Server 1.21.1 | ✅ Yes | Perfect match |
 
 ---
 
 ## 📊 Technical Summary
 
-| Property | Value |
-|----------|-------|
-| **Minecraft** | 1.20.1 → 1.21.x |
-| **NeoForge** | 21.1.76+ |
-| **Java** | 21+ |
-| **Type** | CLIENT-ONLY |
-| **Server required** | ❌ NO |
-| **Config Type** | CLIENT (not COMMON) |
+![Type](https://img.shields.io/badge/Type-Client%20Side-purple?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)
+![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red?style=flat-square)
+
+| Property | Value | Status |
+|----------|-------|--------|
+| **Minecraft Versions** | 1.20.1 → 1.21.x | ✅ Stable |
+| **NeoForge Version** | 21.1.76+ | ✅ Tested |
+| **Java Version** | 21+ | ✅ Required |
+| **Mod Type** | CLIENT-ONLY | ✅ Optimized |
+| **Server Required** | ❌ NO | ✅ Good |
+| **Config Type** | CLIENT | ✅ Proper |
+| **Performance Impact** | Minimal | ✅ Optimized |
+| **Multi-Platform** | Yes | ✅ Supported |
 
 ---
 
-## ⚠️ Changes Made
+## 📚 Additional Resources
 
-To make the mod strictly client-only:
-
-1. ✅ **neoforge.mods.toml**: `side = "CLIENT"` (instead of `BOTH`)
-2. ✅ **MinecraftOverlay.java**: 
-   - Added `@Mod(dist = Dist.CLIENT)`
-   - Removed `onServerStarting()`
-   - Changed config to `ModConfig.Type.CLIENT`
-3. ✅ Removed unnecessary server imports
+- **[📖 Complete README (EN)](README.md)** - Full usage guide
+- **[📖 Documentation (FR)](README_FR.md)** - Guide complet en français
+- **[🐛 Issue Tracker](https://github.com/Cubenyx-Studio/minecraft-overlay/issues)** - Report problems
+- **[⭐ Star Us](https://github.com/Cubenyx-Studio/minecraft-overlay)** - Show support
 
 ---
 
-## 🎉 Conclusion
-
-✅ **The mod is now strictly CLIENT-ONLY**  
-✅ **Compatible with Minecraft 1.20.1 → 1.21.x**  
-✅ **Works on all servers without server installation**  
-✅ **Configuration optimized for client**
-
----
-
-**🎮 Ready to use on any server 1.20.1-1.21.x!**
-
+**Last Updated:** October 30, 2025  
+**Version:** 1.0.0  
+**Status:** ✅ Active Development
 
