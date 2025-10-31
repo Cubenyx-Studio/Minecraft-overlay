@@ -3,8 +3,6 @@
 ![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20.1--1.21.x-brightgreen?style=for-the-badge&logo=minecraft)
 [![NeoForge](https://img.shields.io/badge/NeoForge-21.1.76+-orange?style=for-the-badge&logo=curseforge)](https://neoforged.net/)
 [![Java Version](https://img.shields.io/badge/Java-21+-blue?style=for-the-badge&logo=openjdk)](https://www.oracle.com/fr/java/technologies/downloads/)
-[![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red?style=for-the-badge)](LICENSE)
-![Client Side](https://img.shields.io/badge/Side-Client%20Only-purple?style=for-the-badge)
 
 [![Issues](https://img.shields.io/github/issues/Cubenyx-Studio/minecraft-overlay?style=for-the-badge&logo=github)](https://github.com/Cubenyx-Studio/minecraft-overlay/issues)
 [![Stars](https://img.shields.io/github/stars/Cubenyx-Studio/minecraft-overlay?style=for-the-badge&logo=github)](https://github.com/Cubenyx-Studio/minecraft-overlay/stargazers)
