@@ -1,64 +1,58 @@
 package com.cubenyxstudio.minecraftoverlay.client;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 /**
  * Tracks player play time across instances, worlds, and dimensions
  */
-@EventBusSubscriber(value = Dist.CLIENT)
 public class PlayTimeTracker {
     private static ResourceKey<Level> lastDimension = null;
     private static boolean initialized = false;
 
-    @SubscribeEvent
-    public static void onPlayerLoggedIn(ClientPlayerNetworkEvent.LoggingIn event) {
+    public static void register() {
         // Player joined a world/server
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player != null) {
-            String worldName = getWorldName(minecraft);
-            OverlayState.onWorldJoin(worldName);
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+            if (client.player != null) {
+                String worldName = getWorldName(client);
+                OverlayState.onWorldJoin(worldName);
 
-            // Also track dimension
-            if (minecraft.player.level() != null) {
-                String dimensionName = getDimensionName(minecraft.player.level().dimension());
-                OverlayState.onDimensionChange(dimensionName);
-                lastDimension = minecraft.player.level().dimension();
+                // Also track dimension
+                if (client.player.level() != null) {
+                    String dimensionName = getDimensionName(client.player.level().dimension());
+                    OverlayState.onDimensionChange(dimensionName);
+                    lastDimension = client.player.level().dimension();
+                }
             }
-        }
-    }
+        });
 
-    @SubscribeEvent
-    public static void onPlayerLoggedOut(ClientPlayerNetworkEvent.LoggingOut event) {
         // Player left the world/server
-        OverlayState.onWorldLeave();
-        lastDimension = null;
-    }
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            OverlayState.onWorldLeave();
+            lastDimension = null;
+        });
 
-    @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
-        // Initialize instance start time on first tick
-        if (!initialized) {
-            OverlayState.initInstanceStartTime();
-            initialized = true;
-        }
-
-        // Check for dimension changes
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player != null && minecraft.player.level() != null) {
-            ResourceKey<Level> currentDimension = minecraft.player.level().dimension();
-            if (lastDimension == null || !lastDimension.equals(currentDimension)) {
-                String dimensionName = getDimensionName(currentDimension);
-                OverlayState.onDimensionChange(dimensionName);
-                lastDimension = currentDimension;
+        // Player tick event
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            // Initialize instance start time on first tick
+            if (!initialized) {
+                OverlayState.initInstanceStartTime();
+                initialized = true;
             }
-        }
+
+            // Check for dimension changes
+            if (client.player != null && client.player.level() != null) {
+                ResourceKey<Level> currentDimension = client.player.level().dimension();
+                if (lastDimension == null || !lastDimension.equals(currentDimension)) {
+                    String dimensionName = getDimensionName(currentDimension);
+                    OverlayState.onDimensionChange(dimensionName);
+                    lastDimension = currentDimension;
+                }
+            }
+        });
     }
 
     private static String getWorldName(Minecraft minecraft) {
