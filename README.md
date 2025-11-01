@@ -1,6 +1,6 @@
 # Minecraft Overlay - Fabric Edition
 
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.x-brightgreen.svg)](https://www.minecraft.net/)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.4-brightgreen.svg)](https://www.minecraft.net/)
 [![Fabric](https://img.shields.io/badge/Fabric-0.16.5-blue.svg)](https://fabricmc.net/)
 [![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red.svg)](https://github.com/Cubenyx-Studio/minecraft-overlay)
 
