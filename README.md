@@ -26,8 +26,8 @@ Minecraft Overlay is a **Steam-like overlay** for Minecraft, bringing advanced H
 ## 🚀 Installation
 
 ### Requirements
-- Minecraft 1.21.x
-- Fabric Loader 0.16.5+
+- Minecraft 1.21.4
+- Fabric Loader 0.16.5
 - Fabric API 0.105.0+1.21.1 (or newer)
 - Java 21+
 
